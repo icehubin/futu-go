@@ -2,3 +2,4 @@
 富途牛牛
 Go语言SDK
 https://www.futunn.com/OpenAPI
+https://openapi.futunn.com/futu-api-doc/
