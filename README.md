@@ -1,2 +1,4 @@
 # futu-go
-富途Go语言SDK
+富途牛牛
+Go语言SDK
+https://www.futunn.com/OpenAPI
