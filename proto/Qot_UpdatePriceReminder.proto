@@ -1,7 +1,7 @@
 syntax = "proto2";
 package Qot_UpdatePriceReminder;
 option java_package = "com.futu.openapi.pb";
-option go_package = "pb/qotupdatepricereminder";
+option go_package = "github.com/futuopen/ftapi4go/pb/qotupdatepricereminder";
 
 import "Common.proto";
 import "Qot_Common.proto";
