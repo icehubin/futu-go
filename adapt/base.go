@@ -127,24 +127,24 @@ var DataAdaptMap = map[uint32]interface{}{
 		ProtoID_InitQuantMode      = 1009
 	*/
 
-	ProtoID_Trd_GetAccList:       CreateTrdGetAccList,       //2001 // 获取业务账户列表
-	ProtoID_Trd_UnlockTrade:      CreateTrdUnlockTrade,      //2005 // 解锁或锁定交易
-	ProtoID_Trd_SubAccPush:       CreateTrdSubAccPush,       //2008 // 订阅业务账户的交易推送数据
-	ProtoID_Trd_GetFunds:         CreateTrdGetFunds,         //2101 // 获取账户资金
-	ProtoID_Trd_GetPositionList:  CreateTrdGetPositionList,  //2102 // 获取账户持仓
-	ProtoID_Trd_GetOrderList:     CreateTrdGetOrderList,     //2201 // 获取订单列表
-	ProtoID_Trd_PlaceOrder:       CreateTrdPlaceOrder,       //2202 // 下单
-	ProtoID_Trd_ModifyOrder:      CreateTrdModifyOrder,      //2205 // 修改订单
-	ProtoID_Trd_UpdateOrder:      CreateTrdUpdateOrder,      // 2208 // 订单状态变动通知(推送)
-	ProtoID_Trd_GetOrderFillList: CreateTrdGetOrderFillList, // 2211 // 获取成交列表
-	ProtoID_Trd_UpdateOrderFill:  CreateTrdUpdateOrderFill,  // 2218 // 成交通知(推送)
-	/*
-		ProtoID_Trd_GetHistoryOrderList     = 2221 // 获取历史订单列表
-		ProtoID_Trd_GetHistoryOrderFillList = 2222 // 获取历史成交列表
-		ProtoID_Trd_GetMaxTrdQtys           = 2111 // 查询最大买卖数量
-		ProtoID_Trd_GetMarginRatio          = 2223 // 获取融资融券数据
-	*/
-	// 订阅数据
+	// 交易相关
+	ProtoID_Trd_GetAccList:              CreateTrdGetAccList,              //2001 // 获取业务账户列表
+	ProtoID_Trd_UnlockTrade:             CreateTrdUnlockTrade,             //2005 // 解锁或锁定交易
+	ProtoID_Trd_SubAccPush:              CreateTrdSubAccPush,              //2008 // 订阅业务账户的交易推送数据
+	ProtoID_Trd_GetFunds:                CreateTrdGetFunds,                //2101 // 获取账户资金
+	ProtoID_Trd_GetPositionList:         CreateTrdGetPositionList,         //2102 // 获取账户持仓
+	ProtoID_Trd_GetOrderList:            CreateTrdGetOrderList,            //2201 // 获取订单列表
+	ProtoID_Trd_PlaceOrder:              CreateTrdPlaceOrder,              //2202 // 下单
+	ProtoID_Trd_ModifyOrder:             CreateTrdModifyOrder,             //2205 // 修改订单
+	ProtoID_Trd_UpdateOrder:             CreateTrdUpdateOrder,             // 2208 // 订单状态变动通知(推送)
+	ProtoID_Trd_GetOrderFillList:        CreateTrdGetOrderFillList,        // 2211 // 获取成交列表
+	ProtoID_Trd_UpdateOrderFill:         CreateTrdUpdateOrderFill,         // 2218 // 成交通知(推送)
+	ProtoID_Trd_GetHistoryOrderList:     CreateTrdGetHistoryOrderList,     // 2221 // 获取历史订单列表
+	ProtoID_Trd_GetHistoryOrderFillList: CreateTrdGetHistoryOrderFillList, //2222 // 获取历史成交列表
+	ProtoID_Trd_GetMaxTrdQtys:           CreateTrdGetMaxTrdQtys,           //2111 // 查询最大买卖数量
+	ProtoID_Trd_GetMarginRatio:          CreateTrdGetMarginRatio,          //2223 // 获取融资融券数据
+
+	// 行情相关
 	ProtoID_Qot_Sub:                 CreateQotSub,                 // 3001 // 订阅或者反订阅
 	ProtoID_Qot_RegQotPush:          CreateQotRegQotPush,          // 3002 // 注册推送
 	ProtoID_Qot_GetSubInfo:          CreateQotGetSubInfo,          // 3003 // 获取订阅信息
@@ -161,8 +161,7 @@ var DataAdaptMap = map[uint32]interface{}{
 	ProtoID_Qot_GetBroker:           CreateQotGetBroker,           // 3014 // 获取经纪队列
 	ProtoID_Qot_UpdateBroker:        CreateQotUpdateBroker,        // 3015 // 推送经纪队列
 	ProtoID_Qot_UpdatePriceReminder: CreateQotUpdatePriceReminder, // 3019 //到价提醒通知
-
-	ProtoID_Qot_RequestHistoryKL: CreateQotRequestHistoryKL, // 拉取历史K线
+	ProtoID_Qot_RequestHistoryKL:    CreateQotRequestHistoryKL,    // 3103 // 拉取历史K线
 	/*
 		Todo:
 		ProtoID_Qot_RequestHistoryKLQuota = 3104 // 拉取历史K线已经用掉的额度

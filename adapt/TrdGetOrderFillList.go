@@ -58,12 +58,25 @@ func (a *TrdGetOrderFillList) SetC2SOption(protoKey string, val interface{}) {
 			EndTime   *string  `protobuf:"bytes,4,opt,name=endTime" json:"endTime,omitempty"`     //结束时间，严格按YYYY-MM-DD HH:MM:SS或YYYY-MM-DD HH:MM:SS.MS格式传，对持仓无效，拉历史数据必须填
 		*/
 		if v, ok := val.(TrdFilterConditions); ok {
-			a.request.C2S.FilterConditions = &trdcommon.TrdFilterConditions{
+			trdCon := &trdcommon.TrdFilterConditions{
 				CodeList:  v.CodeList,
 				IdList:    v.IdList,
 				BeginTime: proto.String(v.BeginTime),
 				EndTime:   proto.String(v.EndTime),
 			}
+			if len(v.CodeList) > 0 {
+				trdCon.CodeList = v.CodeList
+			}
+			if len(v.IdList) > 0 {
+				trdCon.IdList = v.IdList
+			}
+			if len(v.BeginTime) > 0 {
+				trdCon.BeginTime = proto.String(v.BeginTime)
+			}
+			if len(v.EndTime) > 0 {
+				trdCon.EndTime = proto.String(v.EndTime)
+			}
+			a.request.C2S.FilterConditions = trdCon
 		}
 	case strings.ToUpper("RefreshCache"), strings.ToUpper("Refresh"):
 		if v, ok := val.(bool); ok {
