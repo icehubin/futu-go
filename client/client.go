@@ -5,6 +5,7 @@ import (
 	"errors"
 	"io"
 	"net"
+	"os"
 	"time"
 
 	"github.com/icehubin/futu-go/logger"
@@ -18,7 +19,7 @@ func New(host string) (*Client, error) {
 	return Create(host, false, "", true)
 }
 
-func NewEncrypt(host string, rsa_file string) (*Client, error) {
+func EncryptNew(host string, rsa_file string) (*Client, error) {
 	return Create(host, true, rsa_file, true)
 }
 
@@ -28,6 +29,17 @@ func Create(host string, encrypt bool, rsa_file string, notify bool) (*Client, e
 		encrypt:  encrypt,
 		notify:   notify,
 		rsa_file: rsa_file,
+	}
+	if rsa_file != "" {
+		file, err := os.Open(rsa_file)
+		if err != nil {
+			return nil, err
+		}
+		defer file.Close()
+		info, _ := file.Stat()
+		buff := make([]byte, info.Size())
+		file.Read(buff)
+		client.rsa_key = buff
 	}
 	err := client.Init()
 	if err != nil {
@@ -53,10 +65,11 @@ func (c *Client) Init() error {
 	}
 	c.conn = conn
 	c.status = 1
-	PacketEncAlgo := common.PacketEncAlgo_PacketEncAlgo_None
+	PacketEncAlgo := int32(common.PacketEncAlgo_PacketEncAlgo_None)
 	if c.encrypt {
-		PacketEncAlgo = common.PacketEncAlgo_PacketEncAlgo_FTAES_ECB
+		PacketEncAlgo = int32(common.PacketEncAlgo_PacketEncAlgo_AES_CBC)
 	}
+	c.encAlgo = PacketEncAlgo
 	c.ProtoWtite(adapt.ProtoID_InitConnect,
 		adapt.With("PacketEncAlgo", PacketEncAlgo),
 		adapt.With("recvNotify", c.notify),
@@ -111,8 +124,11 @@ func (c *Client) ProtoWtite(protoID uint32, dopts ...adapt.Option) (uint32, erro
 		}
 
 		if bodyByte, ok := da.PackBody(); ok {
+			header := c.shaHeader(protoID, serialNO, bodyByte)
 			bodyByte = c.bodyEncrypt(protoID, bodyByte)
-			headerByte := c.genHeader(protoID, serialNO, bodyByte)
+			//加密后修正bodylen
+			header.SetBodyLen(uint32(len(bodyByte)))
+			headerByte := header.Pack()
 			logger.WithFields(logger.Fields{
 				"protoID":  protoID,
 				"serialNO": serialNO,
@@ -222,7 +238,7 @@ func (c *Client) readBytes(b []byte) (int, error) {
 	return lenth, err
 }
 
-func (c *Client) genHeader(protoID uint32, serialNO uint32, body []byte) []byte {
+func (c *Client) shaHeader(protoID uint32, serialNO uint32, body []byte) adapt.Header {
 	header := adapt.Header{}
 	header.SetProtoID(protoID)
 	header.SetProtoFmtType(uint8(0))
@@ -234,8 +250,7 @@ func (c *Client) genHeader(protoID uint32, serialNO uint32, body []byte) []byte 
 	io.WriteString(hs, string(body))
 	s := hs.Sum(nil)
 	header.SetBodySHA1(s)
-	hp := header.Pack()
-	return hp
+	return header
 }
 
 func (c *Client) genSerialNO() uint32 {
@@ -268,6 +283,8 @@ type Client struct {
 	encrypt  bool
 	notify   bool
 	rsa_file string
+	rsa_key  []byte
+	encAlgo  int32
 	conn     *net.TCPConn
 	server   *adapt.Server
 	status   uint8

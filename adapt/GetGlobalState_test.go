@@ -10,6 +10,8 @@ import (
 
 func TestGetGlobalState(t *testing.T) {
 	clt, err := client.New("127.0.0.1:11111")
+	//used to test encrypt done!
+	//clt, err := client.EncryptNew("127.0.0.1:11111", "/Users/hubin06/mywork/privatekey.pem")
 	if err != nil {
 		return
 	}

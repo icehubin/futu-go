@@ -2,6 +2,8 @@
 package adapt
 
 import (
+	"strings"
+
 	"github.com/icehubin/futu-go/pb/common"
 	"github.com/icehubin/futu-go/pb/initconnect"
 	"google.golang.org/protobuf/proto"
@@ -59,24 +61,24 @@ func (a *InitConnect) SetC2SOption(protoKey string, val interface{}) {
 		ProgrammingLanguage *string `protobuf:"bytes,6,opt,name=programmingLanguage" json:"programmingLanguage,omitempty"` //接口编程语言，用于统计语言偏好
 
 	*/
-	switch protoKey {
-	case "RecvNotify", "recvNotify":
+	switch strings.ToUpper(protoKey) {
+	case strings.ToUpper("RecvNotify"), strings.ToUpper("rNotify"):
 		if v, ok := val.(bool); ok {
 			a.SetRecvNotify(v)
 		}
-	case "PacketEncAlgo", "packetEncAlgo":
+	case strings.ToUpper("PacketEncAlgo"), strings.ToUpper("EncAlgo"):
 		if v, ok := val.(int32); ok {
 			a.SetPacketEncAlgo(v)
 		}
-	case "PushProtoFmt", "pushProtoFmt":
+	case strings.ToUpper("PushProtoFmt"), strings.ToUpper("ProtoFmt"):
 		if v, ok := val.(int32); ok {
 			a.SetPushProtoFmt(v)
 		}
-	case "ClientID", "clientID":
+	case strings.ToUpper("ClientID"), strings.ToUpper("client"):
 		if v, ok := val.(string); ok {
 			a.request.C2S.ClientID = proto.String(v)
 		}
-	case "rsa_file":
+	case strings.ToUpper("rsa_file"):
 		if v, ok := val.(string); ok {
 			a.res_file = v
 		}
