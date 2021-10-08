@@ -166,10 +166,11 @@ var DataAdaptMap = map[uint32]interface{}{
 	ProtoID_Qot_RequestRehab:          CreateQotRequestRehab,          // 3105 // 获取除权信息
 
 	// 其他行情数据
+
+	ProtoID_Qot_GetSuspend: CreateQotGetSuspend, //3201 // 获取股票停牌信息
 	/*
 		Todo:
 		// 其他行情数据
-		ProtoID_Qot_GetSuspend           = 3201 // 获取股票停牌信息
 		ProtoID_Qot_GetStaticInfo        = 3202 // 获取股票列表
 		ProtoID_Qot_GetSecuritySnapshot  = 3203 // 获取股票快照
 		ProtoID_Qot_GetPlateSet          = 3204 // 获取板块集合下的板块
