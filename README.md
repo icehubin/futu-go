@@ -147,6 +147,21 @@ ResPack定义了回包结构体，一个包包括Header和Response
 读一个包，返回ResPack，异步场景使用，使用Worker框架的情况下自己代码基本用不到
 
 ## client.Worker
+
+**client.Worker是什么？**
+
+> client.Worker是一个超级超级轻量的调度框架，配合client.Client可以非常方便的实现你的策略逻辑
+
+**client.Worker为什么要这样设计？**
+
+> client.Worker这样设计是为了让你可以任意细粒度的拆分不同的数据策略到不同的goroutine里执行不同的任务，只要你愿意。
+
+> 这需要配合QotSub协议，细粒度的订阅行情数据
+
+> 这样做的好处是可以让你避免混合数据订阅的相互堵塞
+
+> 更多的好处可以自己发掘
+
 1. client.NewWorker()
 
 创建client.Worker对象
