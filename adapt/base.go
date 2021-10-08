@@ -119,9 +119,9 @@ var DataAdaptMap = map[uint32]interface{}{
 	ProtoID_Notify:         CreateNotify,         // 1003 // 通知推送
 	ProtoID_KeepAlive:      CreateKeepAlive,      // 1004 // 心跳保活
 	ProtoID_GetUserInfo:    CreateGetUserInfo,    // 1005 // 获取用户信息
+	ProtoID_Verification:   CreateVerification,   // 1006 // 请求或输入验证码
 	/*
 		Todo
-		ProtoID_Verification       = 1006 // 请求或输入验证码
 		ProtoID_GetDelayStatistics = 1007 // 获取延迟统计
 		ProtoID_TestCmd            = 1008
 		ProtoID_InitQuantMode      = 1009
