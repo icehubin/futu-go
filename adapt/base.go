@@ -167,33 +167,28 @@ var DataAdaptMap = map[uint32]interface{}{
 
 	// 其他行情数据
 
-	ProtoID_Qot_GetSuspend:             CreateQotGetSuspend,             // 3201 // 获取股票停牌信息
-	ProtoID_Qot_GetStaticInfo:          CreateQotGetStaticInfo,          // 3202 // 获取股票列表
-	ProtoID_Qot_GetSecuritySnapshot:    CreateQotGetSecuritySnapshot,    // 3203 // 获取股票快照
-	ProtoID_Qot_GetPlateSet:            CreateQotGetPlateSet,            // 3204 // 获取板块集合下的板块
-	ProtoID_Qot_GetPlateSecurity:       CreateQotGetPlateSecurity,       // 3205 // 获取板块下的股票
-	ProtoID_Qot_GetReference:           CreateQotGetReference,           // 3206 // 获取正股相关股票，暂时只有窝轮
-	ProtoID_Qot_GetOwnerPlate:          CreateQotGetOwnerPlate,          // 3207 // 获取股票所属板块
-	ProtoID_Qot_GetHoldingChangeList:   CreateQotGetHoldingChangeList,   // 3208 // 获取高管持股变动
-	ProtoID_Qot_GetOptionChain:         CreateQotGetOptionChain,         // 3209 // 获取期权链
-	ProtoID_Qot_GetWarrant:             CreateQotGetWarrant,             // 3210 // 拉取窝轮信息
-	ProtoID_Qot_GetCapitalFlow:         CreateQotGetCapitalFlow,         // 3211 // 获取资金流向
-	ProtoID_Qot_GetCapitalDistribution: CreateQotGetCapitalDistribution, // 3212 // 获取资金分布
-	ProtoID_Qot_GetUserSecurity:        CreateQotGetUserSecurity,        // 3213 // 获取自选股分组下的股票
-	ProtoID_Qot_ModifyUserSecurity:     CreateQotModifyUserSecurity,     // 3214 // 修改自选股分组下的股票
-	ProtoID_Qot_StockFilter:            CreateQotStockFilter,            // 3215 // 条件选股
-	ProtoID_Qot_GetCodeChange:          CreateQotGetCodeChange,          // 3216 // 代码变换
-	ProtoID_Qot_GetIpoList:             CreateQotGetIpoList,             // 3217 // 获取新股Ipo
-	ProtoID_Qot_GetFutureInfo:          CreateQotGetFutureInfo,          // 3218 // 获取期货资料
-	ProtoID_Qot_RequestTradeDate:       CreateQotRequestTradeDate,       // 3219 // 在线拉取交易日
-	ProtoID_Qot_GetUserSecurityGroup:   CreateQotGetUserSecurityGroup,   // 3222 // 获取自选股分组
-	/*
-		Todo:
-		// 其他行情数据
-		ProtoID_Qot_SetPriceReminder   = 3220 // 设置到价提醒
-		ProtoID_Qot_GetPriceReminder   = 3221 // 获取到价提醒
-
-		ProtoID_Qot_GetMarketState          = 3223 // 获取指定品种的市场状态
-		ProtoID_Qot_GetOptionExpirationDate = 3224 // 获取期权到期日
-	*/
+	ProtoID_Qot_GetSuspend:              CreateQotGetSuspend,              // 3201 // 获取股票停牌信息
+	ProtoID_Qot_GetStaticInfo:           CreateQotGetStaticInfo,           // 3202 // 获取股票列表
+	ProtoID_Qot_GetSecuritySnapshot:     CreateQotGetSecuritySnapshot,     // 3203 // 获取股票快照
+	ProtoID_Qot_GetPlateSet:             CreateQotGetPlateSet,             // 3204 // 获取板块集合下的板块
+	ProtoID_Qot_GetPlateSecurity:        CreateQotGetPlateSecurity,        // 3205 // 获取板块下的股票
+	ProtoID_Qot_GetReference:            CreateQotGetReference,            // 3206 // 获取正股相关股票，暂时只有窝轮
+	ProtoID_Qot_GetOwnerPlate:           CreateQotGetOwnerPlate,           // 3207 // 获取股票所属板块
+	ProtoID_Qot_GetHoldingChangeList:    CreateQotGetHoldingChangeList,    // 3208 // 获取高管持股变动
+	ProtoID_Qot_GetOptionChain:          CreateQotGetOptionChain,          // 3209 // 获取期权链
+	ProtoID_Qot_GetWarrant:              CreateQotGetWarrant,              // 3210 // 拉取窝轮信息
+	ProtoID_Qot_GetCapitalFlow:          CreateQotGetCapitalFlow,          // 3211 // 获取资金流向
+	ProtoID_Qot_GetCapitalDistribution:  CreateQotGetCapitalDistribution,  // 3212 // 获取资金分布
+	ProtoID_Qot_GetUserSecurity:         CreateQotGetUserSecurity,         // 3213 // 获取自选股分组下的股票
+	ProtoID_Qot_ModifyUserSecurity:      CreateQotModifyUserSecurity,      // 3214 // 修改自选股分组下的股票
+	ProtoID_Qot_StockFilter:             CreateQotStockFilter,             // 3215 // 条件选股
+	ProtoID_Qot_GetCodeChange:           CreateQotGetCodeChange,           // 3216 // 代码变换
+	ProtoID_Qot_GetIpoList:              CreateQotGetIpoList,              // 3217 // 获取新股Ipo
+	ProtoID_Qot_GetFutureInfo:           CreateQotGetFutureInfo,           // 3218 // 获取期货资料
+	ProtoID_Qot_RequestTradeDate:        CreateQotRequestTradeDate,        // 3219 // 在线拉取交易日
+	ProtoID_Qot_SetPriceReminder:        CreateQotSetPriceReminder,        // 3220 // 设置到价提醒
+	ProtoID_Qot_GetPriceReminder:        CreateQotGetPriceReminder,        // 3221 // 获取到价提醒
+	ProtoID_Qot_GetUserSecurityGroup:    CreateQotGetUserSecurityGroup,    // 3222 // 获取自选股分组
+	ProtoID_Qot_GetMarketState:          CreateQotGetMarketState,          // 3223 // 获取指定品种的市场状态
+	ProtoID_Qot_GetOptionExpirationDate: CreateQotGetOptionExpirationDate, // 3224 // 获取期权到期日
 }
