@@ -167,16 +167,16 @@ var DataAdaptMap = map[uint32]interface{}{
 
 	// 其他行情数据
 
-	ProtoID_Qot_GetSuspend: CreateQotGetSuspend, //3201 // 获取股票停牌信息
+	ProtoID_Qot_GetSuspend:          CreateQotGetSuspend,          // 3201 // 获取股票停牌信息
+	ProtoID_Qot_GetStaticInfo:       CreateQotGetStaticInfo,       // 3202 // 获取股票列表
+	ProtoID_Qot_GetSecuritySnapshot: CreateQotGetSecuritySnapshot, // 3203 // 获取股票快照
+	ProtoID_Qot_GetPlateSet:         CreateQotGetPlateSet,         // 3204 // 获取板块集合下的板块
+	ProtoID_Qot_GetPlateSecurity:    CreateQotGetPlateSecurity,    // 3205 // 获取板块下的股票
+	ProtoID_Qot_GetReference:        CreateQotGetReference,        // 3206 // 获取正股相关股票，暂时只有窝轮
+	ProtoID_Qot_GetOwnerPlate:       CreateQotGetOwnerPlate,       // 3207 // 获取股票所属板块
 	/*
 		Todo:
 		// 其他行情数据
-		ProtoID_Qot_GetStaticInfo        = 3202 // 获取股票列表
-		ProtoID_Qot_GetSecuritySnapshot  = 3203 // 获取股票快照
-		ProtoID_Qot_GetPlateSet          = 3204 // 获取板块集合下的板块
-		ProtoID_Qot_GetPlateSecurity     = 3205 // 获取板块下的股票
-		ProtoID_Qot_GetReference         = 3206 // 获取正股相关股票，暂时只有窝轮
-		ProtoID_Qot_GetOwnerPlate        = 3207 // 获取股票所属板块
 		ProtoID_Qot_GetHoldingChangeList = 3208 // 获取高管持股变动
 		ProtoID_Qot_GetOptionChain       = 3209 // 获取期权链
 
