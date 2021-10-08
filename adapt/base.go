@@ -181,19 +181,18 @@ var DataAdaptMap = map[uint32]interface{}{
 	ProtoID_Qot_GetCapitalDistribution: CreateQotGetCapitalDistribution, // 3212 // 获取资金分布
 	ProtoID_Qot_GetUserSecurity:        CreateQotGetUserSecurity,        // 3213 // 获取自选股分组下的股票
 	ProtoID_Qot_ModifyUserSecurity:     CreateQotModifyUserSecurity,     // 3214 // 修改自选股分组下的股票
+	ProtoID_Qot_StockFilter:            CreateQotStockFilter,            // 3215 // 条件选股
+	ProtoID_Qot_GetCodeChange:          CreateQotGetCodeChange,          // 3216 // 代码变换
+	ProtoID_Qot_GetIpoList:             CreateQotGetIpoList,             // 3217 // 获取新股Ipo
 	ProtoID_Qot_GetUserSecurityGroup:   CreateQotGetUserSecurityGroup,   // 3222 // 获取自选股分组
 	/*
 		Todo:
 		// 其他行情数据
-		ProtoID_Qot_StockFilter        = 3215 // 条件选股
-		ProtoID_Qot_GetCodeChange      = 3216 // 代码变换
-		ProtoID_Qot_GetIpoList         = 3217 // 获取新股Ipo
 		ProtoID_Qot_GetFutureInfo      = 3218 // 获取期货资料
 		ProtoID_Qot_RequestTradeDate   = 3219 // 在线拉取交易日
 		ProtoID_Qot_SetPriceReminder   = 3220 // 设置到价提醒
 		ProtoID_Qot_GetPriceReminder   = 3221 // 获取到价提醒
 
-		ProtoID_Qot_GetUserSecurityGroup    = 3222 // 获取自选股分组
 		ProtoID_Qot_GetMarketState          = 3223 // 获取指定品种的市场状态
 		ProtoID_Qot_GetOptionExpirationDate = 3224 // 获取期权到期日
 	*/

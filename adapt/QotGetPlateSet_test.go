@@ -32,7 +32,7 @@ func TestQotGetPlateSet(t *testing.T) {
 
 	*/
 	res := clt.Sync(adapt.ProtoID_Qot_GetPlateSet,
-		adapt.With("market", int32(1)),
+		adapt.With("market", int32(21)),
 		adapt.With("type", int32(1)),
 	)
 
