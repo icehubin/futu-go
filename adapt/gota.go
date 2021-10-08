@@ -1,5 +1,18 @@
 package adapt
 
+/*
+把*proto.Message类型的返回值转换成 map[string]interface{}
+方便快速的载入 gota (github.com/go-gota/gota/dataframe), gota是GoLang下的计算工具，与Python下的pandas类似
+转换后的key，是使用的protobuf中的`json`tag的定义，首字母小写的那个
+你也可以使用adapt.Field('oldkey','newkey')替换掉旧的key，因为有些字段定义太长，在gota下会被折叠，或者与你自己的数据库字段定义不一致
+useage:
+adapt.PbParser(
+		adapt.Field("time", "timeChange"),
+		adapt.Field("key", "keyNew"),
+	)
+一旦使用了 adapt.Field('oldkey','newkey')，就需要把所有需要的key list都加入，没有加入的key会被丢弃，可以使用这个来过滤不需要的key
+如果只是过滤key，不改变key的值，newkey可以传空字符串
+*/
 import (
 	"reflect"
 	"strings"
@@ -83,12 +96,30 @@ func (p *PBMessageParser) parseValue(fvalue reflect.Value) interface{} {
 		return fvalue.Interface()
 	case reflect.Chan:
 		return fvalue.Interface()
-	case reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int, reflect.Int64:
+	case reflect.Int64:
 		return fvalue.Int()
-	case reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint, reflect.Uint64:
+	case reflect.Int8:
+		return int8(fvalue.Int())
+	case reflect.Int16:
+		return int16(fvalue.Int())
+	case reflect.Int32:
+		return int32(fvalue.Int())
+	case reflect.Int:
+		return int(fvalue.Int())
+	case reflect.Uint64:
 		return fvalue.Uint()
-	case reflect.Float32, reflect.Float64:
+	case reflect.Uint8:
+		return uint8(fvalue.Uint())
+	case reflect.Uint16:
+		return uint16(fvalue.Uint())
+	case reflect.Uint32:
+		return uint32(fvalue.Uint())
+	case reflect.Uint:
+		return uint(fvalue.Uint())
+	case reflect.Float64:
 		return fvalue.Float()
+	case reflect.Float32:
+		return float32(fvalue.Float())
 	case reflect.String:
 		return fvalue.String()
 	case reflect.Bool:
@@ -153,6 +184,13 @@ func (p *PBMessageParser) parseStruct(pm interface{}) map[string]interface{} {
 		pv := p.parseValue(fieldValue)
 		if nil != pv {
 			//todo field_change
+			if len(p.fields) > 0 {
+				if alias_key, ok := p.fields[field_key]; ok {
+					field_key = alias_key
+				} else {
+					continue
+				}
+			}
 			res[field_key] = pv
 		}
 	}
