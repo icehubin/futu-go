@@ -19,6 +19,14 @@ futu-go被极简设计，方便开发者对照现有官方文档就能方便的�
 |pb|子目录下分布定义|使用build.sh生产的GO语言的pb定义|
 |examples/xxx|main|SDK调用的示例|
 
+# logger介绍
+
+logger是futu-go封装的日志打印接口，采用logrus格式
+
+为了开发调试方便，默认的日志级别是DebugLevel级别，这样可以打印出所有交付日志方便开发过程测试，这样futu-go的单测程序都没有做判定，而是通过观察日志来验证结果。
+
+正式运行时，可以通过 `logger.SetLevel(logger.WarnLevel)` 来改变日志级别，减少交互日志打印，但实际没有必要，不建议这样做。
+
 # adapt介绍
 adapt主要是协议适配，主要用到的有
 
