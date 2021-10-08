@@ -179,11 +179,13 @@ var DataAdaptMap = map[uint32]interface{}{
 	ProtoID_Qot_GetWarrant:             CreateQotGetWarrant,             // 3210 // 拉取窝轮信息
 	ProtoID_Qot_GetCapitalFlow:         CreateQotGetCapitalFlow,         // 3211 // 获取资金流向
 	ProtoID_Qot_GetCapitalDistribution: CreateQotGetCapitalDistribution, // 3212 // 获取资金分布
+
+	ProtoID_Qot_GetUserSecurity:      CreateQotGetUserSecurity,      // 3213 // 获取自选股分组下的股票
+	ProtoID_Qot_ModifyUserSecurity:   CreateQotModifyUserSecurity,   // 3214 // 修改自选股分组下的股票
+	ProtoID_Qot_GetUserSecurityGroup: CreateQotGetUserSecurityGroup, // 3222 // 获取自选股分组
 	/*
 		Todo:
 		// 其他行情数据
-		ProtoID_Qot_GetUserSecurity    = 3213 // 获取自选股分组下的股票
-		ProtoID_Qot_ModifyUserSecurity = 3214 // 修改自选股分组下的股票
 		ProtoID_Qot_StockFilter        = 3215 // 条件选股
 		ProtoID_Qot_GetCodeChange      = 3216 // 代码变换
 		ProtoID_Qot_GetIpoList         = 3217 // 获取新股Ipo
