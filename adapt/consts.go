@@ -7,7 +7,7 @@ import (
 
 const (
 	//默认的ClientID, 用于区分不同的api
-	DEFULAT_CLIENT_ID = "Go-by-icehu"
+	DEFULAT_CLIENT_ID = "GoByIcehu"
 	CLIENT_VERSION    = 300
 )
 
