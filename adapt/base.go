@@ -145,28 +145,29 @@ var DataAdaptMap = map[uint32]interface{}{
 	ProtoID_Trd_GetMarginRatio:          CreateTrdGetMarginRatio,          //2223 // 获取融资融券数据
 
 	// 行情相关
-	ProtoID_Qot_Sub:                 CreateQotSub,                 // 3001 // 订阅或者反订阅
-	ProtoID_Qot_RegQotPush:          CreateQotRegQotPush,          // 3002 // 注册推送
-	ProtoID_Qot_GetSubInfo:          CreateQotGetSubInfo,          // 3003 // 获取订阅信息
-	ProtoID_Qot_GetBasicQot:         CreateQotGetBasicQot,         // 3004 // 获取股票基本行情
-	ProtoID_Qot_UpdateBasicQot:      CreateQotUpdateBasicQot,      // 3005 // 推送股票基本行情
-	ProtoID_Qot_GetKL:               CreateQotGetKL,               // 3006 // 获取K线
-	ProtoID_Qot_UpdateKL:            CreateQotUpdateKL,            // 3007 // 推送K线
-	ProtoID_Qot_GetRT:               CreateQotGetRT,               // 3008 // 获取分时
-	ProtoID_Qot_UpdateRT:            CreateQotUpdateRT,            // 3009 // 推送分时
-	ProtoID_Qot_GetTicker:           CreateQotGetTicker,           // 3010 // 获取逐笔
-	ProtoID_Qot_UpdateTicker:        CreateQotUpdateTicker,        // 3011 // 推送逐笔
-	ProtoID_Qot_GetOrderBook:        CreateQotGetOrderBook,        // 3012 // 获取买卖盘
-	ProtoID_Qot_UpdateOrderBook:     CreateQotUpdateOrderBook,     // 3013 // 推送买卖盘
-	ProtoID_Qot_GetBroker:           CreateQotGetBroker,           // 3014 // 获取经纪队列
-	ProtoID_Qot_UpdateBroker:        CreateQotUpdateBroker,        // 3015 // 推送经纪队列
-	ProtoID_Qot_UpdatePriceReminder: CreateQotUpdatePriceReminder, // 3019 //到价提醒通知
-	ProtoID_Qot_RequestHistoryKL:    CreateQotRequestHistoryKL,    // 3103 // 拉取历史K线
+	ProtoID_Qot_Sub:                   CreateQotSub,                   // 3001 // 订阅或者反订阅
+	ProtoID_Qot_RegQotPush:            CreateQotRegQotPush,            // 3002 // 注册推送
+	ProtoID_Qot_GetSubInfo:            CreateQotGetSubInfo,            // 3003 // 获取订阅信息
+	ProtoID_Qot_GetBasicQot:           CreateQotGetBasicQot,           // 3004 // 获取股票基本行情
+	ProtoID_Qot_UpdateBasicQot:        CreateQotUpdateBasicQot,        // 3005 // 推送股票基本行情
+	ProtoID_Qot_GetKL:                 CreateQotGetKL,                 // 3006 // 获取K线
+	ProtoID_Qot_UpdateKL:              CreateQotUpdateKL,              // 3007 // 推送K线
+	ProtoID_Qot_GetRT:                 CreateQotGetRT,                 // 3008 // 获取分时
+	ProtoID_Qot_UpdateRT:              CreateQotUpdateRT,              // 3009 // 推送分时
+	ProtoID_Qot_GetTicker:             CreateQotGetTicker,             // 3010 // 获取逐笔
+	ProtoID_Qot_UpdateTicker:          CreateQotUpdateTicker,          // 3011 // 推送逐笔
+	ProtoID_Qot_GetOrderBook:          CreateQotGetOrderBook,          // 3012 // 获取买卖盘
+	ProtoID_Qot_UpdateOrderBook:       CreateQotUpdateOrderBook,       // 3013 // 推送买卖盘
+	ProtoID_Qot_GetBroker:             CreateQotGetBroker,             // 3014 // 获取经纪队列
+	ProtoID_Qot_UpdateBroker:          CreateQotUpdateBroker,          // 3015 // 推送经纪队列
+	ProtoID_Qot_UpdatePriceReminder:   CreateQotUpdatePriceReminder,   // 3019 //到价提醒通知
+	ProtoID_Qot_RequestHistoryKL:      CreateQotRequestHistoryKL,      // 3103 // 拉取历史K线
+	ProtoID_Qot_RequestHistoryKLQuota: CreateQotRequestHistoryKLQuota, // 3104 // 拉取历史K线已经用掉的额度
+	ProtoID_Qot_RequestRehab:          CreateQotRequestRehab,          // 3105 // 获取除权信息
+
+	// 其他行情数据
 	/*
 		Todo:
-		ProtoID_Qot_RequestHistoryKLQuota = 3104 // 拉取历史K线已经用掉的额度
-		ProtoID_Qot_RequestRehab          = 3105 // 获取除权信息
-
 		// 其他行情数据
 		ProtoID_Qot_GetSuspend           = 3201 // 获取股票停牌信息
 		ProtoID_Qot_GetStaticInfo        = 3202 // 获取股票列表
