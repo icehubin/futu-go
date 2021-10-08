@@ -114,16 +114,16 @@ type TrdFilterConditions struct {
 
 var DataAdaptMap = map[uint32]interface{}{
 
-	ProtoID_InitConnect:    CreateInitConnect,    // 1001 // 初始化连接
-	ProtoID_GetGlobalState: CreateGetGlobalState, // 1002 // 获取全局状态
-	ProtoID_Notify:         CreateNotify,         // 1003 // 通知推送
-	ProtoID_KeepAlive:      CreateKeepAlive,      // 1004 // 心跳保活
-	ProtoID_GetUserInfo:    CreateGetUserInfo,    // 1005 // 获取用户信息
-	ProtoID_Verification:   CreateVerification,   // 1006 // 请求或输入验证码
-	ProtoID_TestCmd:        CreateTestCmd,        // 1008
+	ProtoID_InitConnect:        CreateInitConnect,        // 1001 // 初始化连接
+	ProtoID_GetGlobalState:     CreateGetGlobalState,     // 1002 // 获取全局状态
+	ProtoID_Notify:             CreateNotify,             // 1003 // 通知推送
+	ProtoID_KeepAlive:          CreateKeepAlive,          // 1004 // 心跳保活
+	ProtoID_GetUserInfo:        CreateGetUserInfo,        // 1005 // 获取用户信息
+	ProtoID_Verification:       CreateVerification,       // 1006 // 请求或输入验证码
+	ProtoID_GetDelayStatistics: CreateGetDelayStatistics, // 1007 // 获取延迟统计
+	ProtoID_TestCmd:            CreateTestCmd,            // 1008
 	/*
-		Todo
-		ProtoID_GetDelayStatistics = 1007 // 获取延迟统计
+		Todo 没有proto文件
 		ProtoID_InitQuantMode      = 1009
 	*/
 
@@ -179,10 +179,9 @@ var DataAdaptMap = map[uint32]interface{}{
 	ProtoID_Qot_GetWarrant:             CreateQotGetWarrant,             // 3210 // 拉取窝轮信息
 	ProtoID_Qot_GetCapitalFlow:         CreateQotGetCapitalFlow,         // 3211 // 获取资金流向
 	ProtoID_Qot_GetCapitalDistribution: CreateQotGetCapitalDistribution, // 3212 // 获取资金分布
-
-	ProtoID_Qot_GetUserSecurity:      CreateQotGetUserSecurity,      // 3213 // 获取自选股分组下的股票
-	ProtoID_Qot_ModifyUserSecurity:   CreateQotModifyUserSecurity,   // 3214 // 修改自选股分组下的股票
-	ProtoID_Qot_GetUserSecurityGroup: CreateQotGetUserSecurityGroup, // 3222 // 获取自选股分组
+	ProtoID_Qot_GetUserSecurity:        CreateQotGetUserSecurity,        // 3213 // 获取自选股分组下的股票
+	ProtoID_Qot_ModifyUserSecurity:     CreateQotModifyUserSecurity,     // 3214 // 修改自选股分组下的股票
+	ProtoID_Qot_GetUserSecurityGroup:   CreateQotGetUserSecurityGroup,   // 3222 // 获取自选股分组
 	/*
 		Todo:
 		// 其他行情数据
