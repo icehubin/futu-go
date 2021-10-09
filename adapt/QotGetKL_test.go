@@ -8,7 +8,6 @@ import (
 	"github.com/go-gota/gota/dataframe"
 	"github.com/icehubin/futu-go/adapt"
 	"github.com/icehubin/futu-go/client"
-	"github.com/icehubin/futu-go/pb/qotgetkl"
 )
 
 func TestQotGetKL(t *testing.T) {
@@ -32,10 +31,22 @@ func TestQotGetKL(t *testing.T) {
 	if res.RetType != adapt.RetType_Succeed {
 		t.Errorf("Error,excepted:%v, got:%v", adapt.RetType_Succeed, res.RetType)
 	} else {
-		Klist := res.S2C.(*qotgetkl.S2C).GetKlList()
 		mp := make([]map[string]interface{}, 0)
-		for _, v := range Klist {
-			mp = append(mp, adapt.PbParser().Map(v))
+		if klList, ok := res.Data["klList"]; ok {
+			klines := adapt.ResToArr(klList)
+			for _, v := range klines {
+				mp = append(mp, adapt.ResToMap(v,
+					adapt.Field("changeRate", "change"),
+					adapt.Field("closePrice", "close"),
+					adapt.Field("highPrice", "high"),
+					adapt.Field("lowPrice", "low"),
+					adapt.Field("lastClosePrice", "close"),
+					adapt.Field("openPrice", "open"),
+					adapt.Field("time", ""),
+					adapt.Field("turnover", ""),
+					adapt.Field("turnoverRate", ""),
+				))
+			}
 		}
 		df := dataframe.LoadMaps(mp)
 		fmt.Println(df)

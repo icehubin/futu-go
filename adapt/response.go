@@ -9,6 +9,7 @@ type Response struct {
 	RetMsg  string //返回结果描述
 	ErrCode int32  //错误码，客户端一般通过retType和retMsg来判断结果和详情，errCode只做日志记录，仅在个别协议失败时对账用
 	S2C     proto.Message
+	Data    map[string]interface{}
 }
 
 func DefaultErr() Response {

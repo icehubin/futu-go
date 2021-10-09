@@ -19,11 +19,10 @@ func TestGetUserInfo(t *testing.T) {
 	time.Sleep(time.Microsecond * 500)
 	res := clt.Sync(adapt.ProtoID_GetUserInfo)
 
-	fmt.Println(adapt.PbParser().Map(res.S2C))
-
 	if res.RetType != adapt.RetType_Succeed {
 		t.Errorf("Error,excepted:%v, got:%v", adapt.RetType_Succeed, res.RetType)
 	} else {
+		fmt.Println(res.Data)
 		t.Logf("PASS,excepted:%v, got:%v", adapt.RetType_Succeed, res.RetType)
 	}
 

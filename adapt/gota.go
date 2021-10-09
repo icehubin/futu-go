@@ -63,17 +63,34 @@ func PbParser(fields ...field) *PBMessageParser {
 	return pm
 }
 
-//Todo fix type
-func (p *PBMessageParser) ArrMap(pms []proto.Message) []map[string]interface{} {
-	mp := make([]map[string]interface{}, 0)
-	for _, v := range pms {
-		mp = append(mp, p.Map(v))
-	}
-	return mp
-}
+/*
+直接将返回结果是 []*proto.Message类型的转换为 []map[string]interface{}
+使用response.Data里的数据，没必要使用这个方法
+*/
+func (p *PBMessageParser) arr(pms interface{}) []map[string]interface{} {
+	res := make([]map[string]interface{}, 0)
 
-func (p *PBMessageParser) Map(pm proto.Message) map[string]interface{} {
-	return p.parseStruct(pm)
+	fvalue := reflect.ValueOf(pms)
+
+	if fvalue.Kind() == reflect.Ptr && fvalue.IsNil() {
+		return res
+	}
+	if fvalue.Kind() == reflect.Ptr {
+		fvalue = fvalue.Elem()
+	}
+	// only accept array or slice param
+	if fvalue.Kind() != reflect.Array && fvalue.Kind() != reflect.Slice {
+		return res
+	}
+
+	for i := 0; i < fvalue.Len(); i++ {
+		aValue := fvalue.Index(i)
+		if aValue.Kind() == reflect.Ptr {
+			aValue = aValue.Elem()
+		}
+		res = append(res, p.parseStruct(aValue.Interface()))
+	}
+	return res
 }
 
 func (p *PBMessageParser) parseValue(fvalue reflect.Value) interface{} {
@@ -183,14 +200,6 @@ func (p *PBMessageParser) parseStruct(pm interface{}) map[string]interface{} {
 		}
 		pv := p.parseValue(fieldValue)
 		if nil != pv {
-			//todo field_change
-			if len(p.fields) > 0 {
-				if alias_key, ok := p.fields[field_key]; ok {
-					field_key = alias_key
-				} else {
-					continue
-				}
-			}
 			res[field_key] = pv
 		}
 	}
@@ -204,4 +213,80 @@ func in(e string, arr []string) bool {
 		}
 	}
 	return false
+}
+
+/*
+S2C(proto.Message) change to Map
+直接将 proto.Message类型的返回转换为 map[string]interface{}
+cliet调用
+*/
+func S2CToMap(s2c interface{}) map[string]interface{} {
+	return PbParser().parseStruct(s2c)
+}
+
+/*
+显示转换隐形map类型为 map[string]interface{}类型
+*/
+func ResToMap(val interface{}, fields ...field) map[string]interface{} {
+	return PbParser(fields...).toMap(val)
+}
+
+/*
+显示转换隐形数组类型为[]interfce{}
+*/
+func ResToArr(val interface{}) []interface{} {
+	return PbParser().toArr(val)
+}
+
+func (p *PBMessageParser) toMap(val interface{}) map[string]interface{} {
+	res := make(map[string]interface{})
+	fvalue := reflect.ValueOf(val)
+
+	if fvalue.Kind() == reflect.Ptr && fvalue.IsNil() {
+		return res
+	}
+	if fvalue.Kind() == reflect.Ptr {
+		fvalue = fvalue.Elem()
+	}
+	// only accept map param
+	if fvalue.Kind() != reflect.Map {
+		return res
+	}
+	kvalue := fvalue.MapKeys()
+	for i := 0; i < len(kvalue); i++ {
+		field_key := kvalue[i].String()
+		if len(p.fields) > 0 {
+			if alias_key, ok := p.fields[field_key]; ok {
+				field_key = alias_key
+			} else {
+				continue
+			}
+		}
+		res[field_key] = fvalue.MapIndex(kvalue[i]).Interface()
+	}
+	return res
+}
+
+func (p *PBMessageParser) toArr(val interface{}) []interface{} {
+	res := make([]interface{}, 0)
+	fvalue := reflect.ValueOf(val)
+
+	if fvalue.Kind() == reflect.Ptr && fvalue.IsNil() {
+		return res
+	}
+	if fvalue.Kind() == reflect.Ptr {
+		fvalue = fvalue.Elem()
+	}
+	// only accept array|slice param
+	if fvalue.Kind() != reflect.Array && fvalue.Kind() != reflect.Slice {
+		return res
+	}
+	for i := 0; i < fvalue.Len(); i++ {
+		aValue := fvalue.Index(i)
+		if aValue.Kind() == reflect.Ptr {
+			aValue = aValue.Elem()
+		}
+		res = append(res, aValue.Interface())
+	}
+	return res
 }
