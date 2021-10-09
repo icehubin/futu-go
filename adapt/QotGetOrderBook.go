@@ -35,6 +35,11 @@ func (a *QotGetOrderBook) SetC2SOption(protoKey string, val interface{}) {
 		Num      *int32              `protobuf:"varint,2,req,name=num" json:"num,omitempty"`          //请求的摆盘个数
 	*/
 	switch strings.ToUpper(protoKey) {
+	case "":
+		//尝试直接设置所有普调变量
+		if v, ok := val.(Message); ok {
+			protoFill(a.request.C2S, v)
+		}
 	case strings.ToUpper("Security"), strings.ToUpper("code"):
 		if v, ok := val.(string); ok {
 			nv := Stock2Security(v)

@@ -19,6 +19,7 @@ func CreateTrdGetMaxTrdQtys(dopts ...Option) AdaptInterface {
 		request: &trdgetmaxtrdqtys.Request{
 			C2S: &trdgetmaxtrdqtys.C2S{
 				OrderType: proto.Int32(1), //默认限价单
+				Header:    &trdcommon.TrdHeader{},
 			},
 		},
 	}
@@ -42,18 +43,19 @@ func (a *TrdGetMaxTrdQtys) SetC2SOption(protoKey string, val interface{}) {
 		SecMarket          *int32   `protobuf:"varint,8,opt,name=secMarket" json:"secMarket,omitempty"`                    //证券所属市场，参见TrdSecMarket的枚举定义
 	*/
 	switch strings.ToUpper(protoKey) {
+	case "":
+		//尝试直接设置所有普调变量
+		if v, ok := val.(Message); ok {
+			protoFill(a.request.C2S, v)
+		}
 	case strings.ToUpper("Header"), strings.ToUpper("Acc"):
 		/*
 			TrdEnv    *int32  `protobuf:"varint,1,req,name=trdEnv" json:"trdEnv,omitempty"`       //交易环境, 参见TrdEnv的枚举定义
 			AccID     *uint64 `protobuf:"varint,2,req,name=accID" json:"accID,omitempty"`         //业务账号, 业务账号与交易环境、市场权限需要匹配，否则会返回错误
 			TrdMarket *int32  `protobuf:"varint,3,req,name=trdMarket" json:"trdMarket,omitempty"` //交易市场, 参见TrdMarket的枚举定义
 		*/
-		if v, ok := val.(TrdHeader); ok {
-			a.request.C2S.Header = &trdcommon.TrdHeader{
-				TrdEnv:    proto.Int32(v.TrdEnv),
-				AccID:     proto.Uint64(v.AccID),
-				TrdMarket: proto.Int32(v.TrdMarket),
-			}
+		if v, ok := val.(Message); ok {
+			protoFill(a.request.C2S.Header, v)
 		}
 	case strings.ToUpper("OrderType"), strings.ToUpper("Type"):
 		if v, ok := val.(int32); ok {

@@ -33,6 +33,11 @@ func (a *QotModifyUserSecurity) SetC2SOption(protoKey string, val interface{}) {
 		SecurityList []*qotcommon.Security `protobuf:"bytes,3,rep,name=securityList" json:"securityList,omitempty"` //新增、删除或移出该分组下的股票
 	*/
 	switch strings.ToUpper(protoKey) {
+	case "":
+		//尝试直接设置所有普调变量
+		if v, ok := val.(Message); ok {
+			protoFill(a.request.C2S, v)
+		}
 	case strings.ToUpper("GroupName"), strings.ToUpper("Name"):
 		if v, ok := val.(string); ok {
 			a.request.C2S.GroupName = proto.String(v)

@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/icehubin/futu-go/adapt"
+	"google.golang.org/protobuf/proto"
 
 	"github.com/icehubin/futu-go/client"
 )
@@ -15,10 +16,10 @@ func TestTrdGetFunds(t *testing.T) {
 	}
 
 	res := clt.Sync(adapt.ProtoID_Trd_GetFunds,
-		adapt.With("Header", adapt.TrdHeader{
-			TrdEnv:    1,
-			AccID:     281756460285261810,
-			TrdMarket: 2,
+		adapt.With("Header", adapt.Message{
+			"trdEnv":    proto.Int32(1),
+			"accID":     proto.Uint64(281756460285261810),
+			"trdMarket": proto.Int32(2),
 		}),
 	)
 

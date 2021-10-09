@@ -29,8 +29,15 @@ func CreateTrdSubAccPush(dopts ...Option) AdaptInterface {
 }
 
 func (a *TrdSubAccPush) SetC2SOption(protoKey string, val interface{}) {
-
+	/*
+		AccIDList []uint64 `protobuf:"varint,1,rep,name=accIDList" json:"accIDList,omitempty"` //要接收推送数据的业务账号列表，全量非增量，即使用者请每次传需要接收推送数据的所有业务账号
+	*/
 	switch strings.ToUpper(protoKey) {
+	case "":
+		//尝试直接设置所有普调变量
+		if v, ok := val.(Message); ok {
+			protoFill(a.request.C2S, v)
+		}
 	case strings.ToUpper("AccIDList"), strings.ToUpper("AccIDs"):
 		if v, ok := val.([]uint64); ok {
 			a.request.C2S.AccIDList = v

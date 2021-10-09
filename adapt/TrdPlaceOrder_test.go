@@ -9,6 +9,7 @@ import (
 	"github.com/icehubin/futu-go/client"
 	"github.com/icehubin/futu-go/logger"
 	"github.com/icehubin/futu-go/pb/trdgetacclist"
+	"google.golang.org/protobuf/proto"
 )
 
 func TestTrdPlaceOrder(t *testing.T) {
@@ -48,28 +49,36 @@ func TestTrdPlaceOrder(t *testing.T) {
 			if trdMarket == int32(2) { //美股
 				//
 				res = clt.Sync(adapt.ProtoID_Trd_PlaceOrder,
-					adapt.With("Header", adapt.TrdHeader{
-						TrdEnv:    acc.GetTrdEnv(),
-						AccID:     acc.GetAccID(),
-						TrdMarket: acc.GetTrdMarketAuthList()[0],
+					adapt.With("Header", adapt.Message{
+						"trdEnv":    proto.Int32(acc.GetTrdEnv()),
+						"accID":     proto.Uint64(acc.GetAccID()),
+						"trdMarket": proto.Int32(acc.GetTrdMarketAuthList()[0]),
+					}),
+					adapt.With("", adapt.Message{
+						"qty":   proto.Float64(1),
+						"price": proto.Float64(1.1),
 					}),
 					adapt.With("code", "US.TSLA"),
 					adapt.With("trdside", "buy"),
-					adapt.With("qty", float64(1)),
-					adapt.With("price", float64(1.1)),
+					// adapt.With("qty", float64(1)),
+					// adapt.With("price", float64(1.1)),
 				)
 			}
 			if trdMarket == int32(1) { //港股
 				res = clt.Sync(adapt.ProtoID_Trd_PlaceOrder,
-					adapt.With("Header", adapt.TrdHeader{
-						TrdEnv:    acc.GetTrdEnv(),
-						AccID:     acc.GetAccID(),
-						TrdMarket: acc.GetTrdMarketAuthList()[0],
+					adapt.With("Header", adapt.Message{
+						"trdEnv":    proto.Int32(acc.GetTrdEnv()),
+						"accID":     proto.Uint64(acc.GetAccID()),
+						"trdMarket": proto.Int32(acc.GetTrdMarketAuthList()[0]),
 					}),
 					adapt.With("code", "HK.00700"),
 					adapt.With("trdside", "buy"),
-					adapt.With("qty", float64(100)),
-					adapt.With("price", float64(400)),
+					adapt.With("", adapt.Message{
+						"qty":   proto.Float64(100),
+						"price": proto.Float64(400),
+					}),
+					// adapt.With("qty", float64(100)),
+					// adapt.With("price", float64(400)),
 				)
 			}
 		}

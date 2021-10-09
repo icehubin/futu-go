@@ -46,6 +46,11 @@ func (a *QotSub) SetC2SOption(protoKey string, val interface{}) {
 		ExtendedTime         *bool                 `protobuf:"varint,9,opt,name=extendedTime" json:"extendedTime,omitempty"`                 // 是否允许美股盘前盘后数据（仅用于订阅美股的实时K线、实时分时、实时逐笔）
 	*/
 	switch strings.ToUpper(protoKey) {
+	case "":
+		//尝试直接设置所有普调变量
+		if v, ok := val.(Message); ok {
+			protoFill(a.request.C2S, v)
+		}
 	case strings.ToUpper("SecurityList"), strings.ToUpper("code_list"):
 		if v, ok := val.([]string); ok {
 			nv := StocksToSecurity(v)

@@ -30,15 +30,16 @@ func (a *ExampleAdapt) SetC2SOption(protoKey string, val interface{}) {
 	//Todo fix Options or remove
 	//notify or push proto remove this method
 	switch strings.ToUpper(protoKey) {
+	case "":
+		//尝试直接设置所有普调变量
+		if v, ok := val.(Message); ok {
+			protoFill(a.request.C2S, v)
+		}
 	case strings.ToUpper("Security"), strings.ToUpper("code"):
 		// if v, ok := val.(string); ok {
 		// 	nv := Stock2Security(v)
 		// 	a.request.C2S.Security = nv
 		// }
-	case strings.ToUpper("maxNum"), strings.ToUpper("num"):
-		if _, ok := val.(int32); ok {
-			// a.request.C2S.MaxRetNum = proto.Int32(v)
-		}
 	}
 }
 

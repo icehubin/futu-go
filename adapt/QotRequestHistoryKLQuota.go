@@ -31,6 +31,11 @@ func (a *QotRequestHistoryKLQuota) SetC2SOption(protoKey string, val interface{}
 		BGetDetail *bool `protobuf:"varint,2,opt,name=bGetDetail" json:"bGetDetail,omitempty"` //是否返回详细拉取过的历史纪录
 	*/
 	switch strings.ToUpper(protoKey) {
+	case "":
+		//尝试直接设置所有普调变量
+		if v, ok := val.(Message); ok {
+			protoFill(a.request.C2S, v)
+		}
 	case strings.ToUpper("BGetDetail"), strings.ToUpper("Detail"):
 		if v, ok := val.(bool); ok {
 			a.request.C2S.BGetDetail = proto.Bool(v)

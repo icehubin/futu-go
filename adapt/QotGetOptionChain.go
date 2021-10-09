@@ -16,7 +16,9 @@ type QotGetOptionChain struct {
 func CreateQotGetOptionChain(dopts ...Option) AdaptInterface {
 	adp := &QotGetOptionChain{
 		request: &qotgetoptionchain.Request{
-			C2S: &qotgetoptionchain.C2S{},
+			C2S: &qotgetoptionchain.C2S{
+				DataFilter: &qotgetoptionchain.DataFilter{},
+			},
 		},
 	}
 	adp.setProtoID(ProtoID_Qot_GetOptionChain)
@@ -37,6 +39,11 @@ func (a *QotGetOptionChain) SetC2SOption(protoKey string, val interface{}) {
 		DataFilter      *DataFilter         `protobuf:"bytes,7,opt,name=dataFilter" json:"dataFilter,omitempty"`            //数据字段筛选
 	*/
 	switch strings.ToUpper(protoKey) {
+	case "":
+		//尝试直接设置所有普调变量
+		if v, ok := val.(Message); ok {
+			protoFill(a.request.C2S, v)
+		}
 	case strings.ToUpper("Owner"), strings.ToUpper("Security"), strings.ToUpper("code"):
 		if v, ok := val.(string); ok {
 			nv := Stock2Security(v)
@@ -62,10 +69,9 @@ func (a *QotGetOptionChain) SetC2SOption(protoKey string, val interface{}) {
 		if v, ok := val.(int32); ok {
 			a.request.C2S.Condition = proto.Int32(v)
 		}
-	case strings.ToUpper("DataFilter"):
-		//todo
-		if v, ok := val.(*qotgetoptionchain.DataFilter); ok {
-			a.request.C2S.DataFilter = v
+	case strings.ToUpper("DataFilter"), strings.ToUpper("Filter"):
+		if v, ok := val.(Message); ok {
+			protoFill(a.request.C2S.DataFilter, v)
 		}
 	}
 }

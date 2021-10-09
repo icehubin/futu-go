@@ -37,7 +37,7 @@ func Field(key string, alias string) field {
 	}
 }
 
-func (p *PBMessageParser) setFields(a field) {
+func (p *messageParser) setFields(a field) {
 	p.fields[a.key] = a.alias
 }
 
@@ -49,12 +49,12 @@ var customMap = map[string]interface{}{
 
 //===
 
-type PBMessageParser struct {
+type messageParser struct {
 	fields map[string]string
 }
 
-func PbParser(fields ...field) *PBMessageParser {
-	pm := &PBMessageParser{
+func PbParser(fields ...field) *messageParser {
+	pm := &messageParser{
 		fields: make(map[string]string),
 	}
 	for _, f := range fields {
@@ -67,7 +67,7 @@ func PbParser(fields ...field) *PBMessageParser {
 直接将返回结果是 []*proto.Message类型的转换为 []map[string]interface{}
 使用response.Data里的数据，没必要使用这个方法
 */
-func (p *PBMessageParser) arr(pms interface{}) []map[string]interface{} {
+func (p *messageParser) arr(pms interface{}) []map[string]interface{} {
 	res := make([]map[string]interface{}, 0)
 
 	fvalue := reflect.ValueOf(pms)
@@ -93,7 +93,7 @@ func (p *PBMessageParser) arr(pms interface{}) []map[string]interface{} {
 	return res
 }
 
-func (p *PBMessageParser) parseValue(fvalue reflect.Value) interface{} {
+func (p *messageParser) parseValue(fvalue reflect.Value) interface{} {
 	switch fvalue.Kind() {
 	case reflect.Slice, reflect.Array:
 		m := make([]interface{}, 0)
@@ -150,7 +150,7 @@ func (p *PBMessageParser) parseValue(fvalue reflect.Value) interface{} {
 	}
 }
 
-func (p *PBMessageParser) parseStruct(pm interface{}) map[string]interface{} {
+func (p *messageParser) parseStruct(pm interface{}) map[string]interface{} {
 	res := make(map[string]interface{})
 	//todo fix types
 
@@ -238,7 +238,7 @@ func ResToArr(val interface{}) []interface{} {
 	return PbParser().toArr(val)
 }
 
-func (p *PBMessageParser) toMap(val interface{}) map[string]interface{} {
+func (p *messageParser) toMap(val interface{}) map[string]interface{} {
 	res := make(map[string]interface{})
 	fvalue := reflect.ValueOf(val)
 
@@ -267,7 +267,7 @@ func (p *PBMessageParser) toMap(val interface{}) map[string]interface{} {
 	return res
 }
 
-func (p *PBMessageParser) toArr(val interface{}) []interface{} {
+func (p *messageParser) toArr(val interface{}) []interface{} {
 	res := make([]interface{}, 0)
 	fvalue := reflect.ValueOf(val)
 

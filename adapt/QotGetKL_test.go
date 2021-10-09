@@ -5,6 +5,8 @@ import (
 	"testing"
 	"time"
 
+	"google.golang.org/protobuf/proto"
+
 	"github.com/go-gota/gota/dataframe"
 	"github.com/icehubin/futu-go/adapt"
 	"github.com/icehubin/futu-go/client"
@@ -22,10 +24,19 @@ func TestQotGetKL(t *testing.T) {
 		adapt.With("IsFirstPush", true),
 	))
 	time.Sleep(time.Microsecond * 500)
+	/*
+		RehabType *int32              `protobuf:"varint,1,req,name=rehabType" json:"rehabType,omitempty"` //Qot_Common.RehabType,复权类型
+		KlType    *int32              `protobuf:"varint,2,req,name=klType" json:"klType,omitempty"`       //Qot_Common.KLType,K线类型
+		Security  *qotcommon.Security `protobuf:"bytes,3,req,name=security" json:"security,omitempty"`    //股票
+		ReqNum    *int32              `protobuf:"varint,4,req,name=reqNum" json:"reqNum,omitempty"`       //请求K线根数
+	*/
 	res := clt.Sync(adapt.ProtoID_Qot_GetKL,
 		adapt.With("code", "SZ.300957"),
 		adapt.With("ktype", "K_DAY"),
-		adapt.With("reqNum", int32(10)),
+		// adapt.With("reqNum", int32(10)),
+		adapt.With("", adapt.Message{
+			"reqNum": proto.Int32(5),
+		}),
 	)
 
 	if res.RetType != adapt.RetType_Succeed {

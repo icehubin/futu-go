@@ -18,7 +18,10 @@ type TrdGetPositionList struct {
 func CreateTrdGetPositionList(dopts ...Option) AdaptInterface {
 	adp := &TrdGetPositionList{
 		request: &trdgetpositionlist.Request{
-			C2S: &trdgetpositionlist.C2S{},
+			C2S: &trdgetpositionlist.C2S{
+				Header:           &trdcommon.TrdHeader{},
+				FilterConditions: &trdcommon.TrdFilterConditions{},
+			},
 		},
 	}
 	adp.setProtoID(ProtoID_Trd_GetPositionList)
@@ -38,18 +41,19 @@ func (a *TrdGetPositionList) SetC2SOption(protoKey string, val interface{}) {
 
 	*/
 	switch strings.ToUpper(protoKey) {
+	case "":
+		//尝试直接设置所有普调变量
+		if v, ok := val.(Message); ok {
+			protoFill(a.request.C2S, v)
+		}
 	case strings.ToUpper("Header"), strings.ToUpper("Acc"):
 		/*
 			TrdEnv    *int32  `protobuf:"varint,1,req,name=trdEnv" json:"trdEnv,omitempty"`       //交易环境, 参见TrdEnv的枚举定义
 			AccID     *uint64 `protobuf:"varint,2,req,name=accID" json:"accID,omitempty"`         //业务账号, 业务账号与交易环境、市场权限需要匹配，否则会返回错误
 			TrdMarket *int32  `protobuf:"varint,3,req,name=trdMarket" json:"trdMarket,omitempty"` //交易市场, 参见TrdMarket的枚举定义
 		*/
-		if v, ok := val.(TrdHeader); ok {
-			a.request.C2S.Header = &trdcommon.TrdHeader{
-				TrdEnv:    proto.Int32(v.TrdEnv),
-				AccID:     proto.Uint64(v.AccID),
-				TrdMarket: proto.Int32(v.TrdMarket),
-			}
+		if v, ok := val.(Message); ok {
+			protoFill(a.request.C2S.Header, v)
 		}
 	case strings.ToUpper("FilterConditions"), strings.ToUpper("Conditions"):
 		/*
@@ -58,26 +62,8 @@ func (a *TrdGetPositionList) SetC2SOption(protoKey string, val interface{}) {
 			BeginTime *string  `protobuf:"bytes,3,opt,name=beginTime" json:"beginTime,omitempty"` //开始时间，严格按YYYY-MM-DD HH:MM:SS或YYYY-MM-DD HH:MM:SS.MS格式传，对持仓无效，拉历史数据必须填
 			EndTime   *string  `protobuf:"bytes,4,opt,name=endTime" json:"endTime,omitempty"`     //结束时间，严格按YYYY-MM-DD HH:MM:SS或YYYY-MM-DD HH:MM:SS.MS格式传，对持仓无效，拉历史数据必须填
 		*/
-		if v, ok := val.(TrdFilterConditions); ok {
-			trdCon := &trdcommon.TrdFilterConditions{
-				CodeList:  v.CodeList,
-				IdList:    v.IdList,
-				BeginTime: proto.String(v.BeginTime),
-				EndTime:   proto.String(v.EndTime),
-			}
-			if len(v.CodeList) > 0 {
-				trdCon.CodeList = v.CodeList
-			}
-			if len(v.IdList) > 0 {
-				trdCon.IdList = v.IdList
-			}
-			if len(v.BeginTime) > 0 {
-				trdCon.BeginTime = proto.String(v.BeginTime)
-			}
-			if len(v.EndTime) > 0 {
-				trdCon.EndTime = proto.String(v.EndTime)
-			}
-			a.request.C2S.FilterConditions = trdCon
+		if v, ok := val.(Message); ok {
+			protoFill(a.request.C2S.FilterConditions, v)
 		}
 	case strings.ToUpper("RefreshCache"), strings.ToUpper("Refresh"):
 		if v, ok := val.(bool); ok {

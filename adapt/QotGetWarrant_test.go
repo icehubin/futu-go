@@ -3,6 +3,8 @@ package adapt_test
 import (
 	"testing"
 
+	"google.golang.org/protobuf/proto"
+
 	"github.com/icehubin/futu-go/adapt"
 	"github.com/icehubin/futu-go/client"
 )
@@ -15,6 +17,10 @@ func TestQotGetWarrant(t *testing.T) {
 
 	res := clt.Sync(adapt.ProtoID_Qot_GetWarrant,
 		adapt.With("code", "HK.00700"),
+		adapt.With("", adapt.Message{
+			"num":   proto.Int32(10),
+			"begin": proto.Int32(0),
+		}),
 	)
 
 	if res.RetType != adapt.RetType_Succeed {

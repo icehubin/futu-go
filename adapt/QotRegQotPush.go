@@ -40,6 +40,11 @@ func (a *QotRegQotPush) SetC2SOption(protoKey string, val interface{}) {
 		IsFirstPush   *bool                 `protobuf:"varint,5,opt,name=isFirstPush" json:"isFirstPush,omitempty"`     //注册后如果本地已有数据是否首推一次已存在数据,该参数不指定则默认true
 	*/
 	switch strings.ToUpper(protoKey) {
+	case "":
+		//尝试直接设置所有普调变量
+		if v, ok := val.(Message); ok {
+			protoFill(a.request.C2S, v)
+		}
 	case strings.ToUpper("SecurityList"):
 		if v, ok := val.([]string); ok {
 			nv := StocksToSecurity(v)

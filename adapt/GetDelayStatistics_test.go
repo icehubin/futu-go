@@ -13,7 +13,11 @@ func TestGetDelayStatistics(t *testing.T) {
 		return
 	}
 
-	res := clt.Sync(adapt.ProtoID_GetDelayStatistics)
+	res := clt.Sync(adapt.ProtoID_GetDelayStatistics,
+		adapt.With("", adapt.Message{
+			"typeList": []int32{1, 2},
+		}),
+	)
 
 	if res.RetType != adapt.RetType_Succeed {
 		t.Errorf("Error,excepted:%v, got:%v", adapt.RetType_Succeed, res.RetType)

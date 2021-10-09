@@ -35,6 +35,11 @@ func (a *GetDelayStatistics) SetC2SOption(protoKey string, val interface{}) {
 		SegmentList  []int32 `protobuf:"varint,3,rep,name=segmentList" json:"segmentList,omitempty"`   //统计分段，默认100ms以下以2ms分段，100ms以上以500，1000，2000，-1分段，-1表示无穷大。
 	*/
 	switch strings.ToUpper(protoKey) {
+	case "":
+		//尝试直接设置所有普调变量
+		if v, ok := val.(Message); ok {
+			protoFill(a.request.C2S, v)
+		}
 	case strings.ToUpper("TypeList"), strings.ToUpper("Types"):
 		/*
 			DelayStatisticsType_DelayStatisticsType_Unkonw     DelayStatisticsType = 0 //未知类型

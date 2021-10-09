@@ -32,6 +32,11 @@ func (a *QotGetPlateSet) SetC2SOption(protoKey string, val interface{}) {
 		PlateSetType *int32 `protobuf:"varint,2,req,name=plateSetType" json:"plateSetType,omitempty"` //Qot_Common.PlateSetType,板块集合的类型
 	*/
 	switch strings.ToUpper(protoKey) {
+	case "":
+		//尝试直接设置所有普调变量
+		if v, ok := val.(Message); ok {
+			protoFill(a.request.C2S, v)
+		}
 	case strings.ToUpper("Market"):
 		if v, ok := val.(int32); ok {
 			a.request.C2S.Market = proto.Int32(v)

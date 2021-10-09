@@ -33,6 +33,11 @@ func (a *QotGetUserSecurityGroup) SetC2SOption(protoKey string, val interface{})
 		GroupType *int32 `protobuf:"varint,1,req,name=groupType" json:"groupType,omitempty"` // GroupType,自选股分组类型。
 	*/
 	switch strings.ToUpper(protoKey) {
+	case "":
+		//尝试直接设置所有普调变量
+		if v, ok := val.(Message); ok {
+			protoFill(a.request.C2S, v)
+		}
 	case strings.ToUpper("GroupType"), strings.ToUpper("Group"):
 		if v, ok := val.(int32); ok {
 			a.request.C2S.GroupType = proto.Int32(v)

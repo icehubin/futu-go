@@ -5,6 +5,7 @@ import (
 
 	"github.com/icehubin/futu-go/adapt"
 	"github.com/icehubin/futu-go/client"
+	"google.golang.org/protobuf/proto"
 )
 
 func TestQotGetIpoList(t *testing.T) {
@@ -14,7 +15,10 @@ func TestQotGetIpoList(t *testing.T) {
 	}
 
 	res := clt.Sync(adapt.ProtoID_Qot_GetIpoList,
-		adapt.With("Market", int32(1)),
+		// adapt.With("Market", int32(1)),
+		adapt.With("", adapt.Message{
+			"market": proto.Int32(1),
+		}),
 	)
 
 	if res.RetType != adapt.RetType_Succeed {

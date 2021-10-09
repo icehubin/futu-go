@@ -7,6 +7,7 @@ import (
 	"github.com/icehubin/futu-go/client"
 	"github.com/icehubin/futu-go/logger"
 	"github.com/icehubin/futu-go/pb/trdgetacclist"
+	"google.golang.org/protobuf/proto"
 )
 
 func TestTrdGetMarginRatio(t *testing.T) {
@@ -30,10 +31,10 @@ func TestTrdGetMarginRatio(t *testing.T) {
 			trdMarket := acc.GetTrdMarketAuthList()[0]
 			if trdMarket == int32(2) { //美股
 				res = clt.Sync(adapt.ProtoID_Trd_GetMarginRatio,
-					adapt.With("Header", adapt.TrdHeader{
-						TrdEnv:    acc.GetTrdEnv(),
-						AccID:     acc.GetAccID(),
-						TrdMarket: acc.GetTrdMarketAuthList()[0],
+					adapt.With("Header", adapt.Message{
+						"trdEnv":    proto.Int32(acc.GetTrdEnv()),
+						"accID":     proto.Uint64(acc.GetAccID()),
+						"trdMarket": proto.Int32(trdMarket),
 					}),
 					adapt.With("code_list", []string{"US.TSLA", "US.BIDU"}),
 				)

@@ -14,8 +14,6 @@ type InitConnect struct {
 	response *initconnect.Response
 
 	adaptBase
-
-	res_file string
 }
 
 /*
@@ -77,10 +75,6 @@ func (a *InitConnect) SetC2SOption(protoKey string, val interface{}) {
 	case strings.ToUpper("ClientID"), strings.ToUpper("client"):
 		if v, ok := val.(string); ok {
 			a.request.C2S.ClientID = proto.String(v)
-		}
-	case strings.ToUpper("rsa_file"):
-		if v, ok := val.(string); ok {
-			a.res_file = v
 		}
 	}
 }

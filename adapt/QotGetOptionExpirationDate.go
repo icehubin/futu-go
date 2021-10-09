@@ -32,6 +32,11 @@ func (a *QotGetOptionExpirationDate) SetC2SOption(protoKey string, val interface
 		IndexOptionType *int32              `protobuf:"varint,2,opt,name=indexOptionType" json:"indexOptionType,omitempty"` //Qot_Common.IndexOptionType，指数期权的类型，仅用于恒指国指
 	*/
 	switch strings.ToUpper(protoKey) {
+	case "":
+		//尝试直接设置所有普调变量
+		if v, ok := val.(Message); ok {
+			protoFill(a.request.C2S, v)
+		}
 	case strings.ToUpper("Owner"), strings.ToUpper("code"):
 		if v, ok := val.(string); ok {
 			nv := Stock2Security(v)

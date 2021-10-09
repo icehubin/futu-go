@@ -16,7 +16,9 @@ type QotGetCodeChange struct {
 func CreateQotGetCodeChange(dopts ...Option) AdaptInterface {
 	adp := &QotGetCodeChange{
 		request: &qotgetcodechange.Request{
-			C2S: &qotgetcodechange.C2S{},
+			C2S: &qotgetcodechange.C2S{
+				TimeFilterList: make([]*qotgetcodechange.TimeFilter, 0),
+			},
 		},
 	}
 	adp.setProtoID(ProtoID_Qot_GetCodeChange)
@@ -34,6 +36,11 @@ func (a *QotGetCodeChange) SetC2SOption(protoKey string, val interface{}) {
 		TypeList       []int32               `protobuf:"varint,4,rep,name=typeList" json:"typeList,omitempty"`            //CodeChangeType，根据类型筛选
 	*/
 	switch strings.ToUpper(protoKey) {
+	case "":
+		//尝试直接设置所有普调变量
+		if v, ok := val.(Message); ok {
+			protoFill(a.request.C2S, v)
+		}
 	case strings.ToUpper("SecurityList"), strings.ToUpper("code_list"):
 		if v, ok := val.([]string); ok {
 			nv := StocksToSecurity(v)
@@ -47,9 +54,14 @@ func (a *QotGetCodeChange) SetC2SOption(protoKey string, val interface{}) {
 		if v, ok := val.([]int32); ok {
 			a.request.C2S.TypeList = v
 		}
-	case strings.ToUpper("TimeFilterList"):
-		if v, ok := val.([]*qotgetcodechange.TimeFilter); ok {
-			a.request.C2S.TimeFilterList = v
+	case strings.ToUpper("TimeFilterList"), strings.ToUpper("TimeFilter"), strings.ToUpper("Filter"):
+		/*
+			Type      *int32  `protobuf:"varint,1,req,name=type" json:"type,omitempty"`          //TimeFilterType, 过滤类型
+			BeginTime *string `protobuf:"bytes,2,opt,name=beginTime" json:"beginTime,omitempty"` //开始时间点
+			EndTime   *string `protobuf:"bytes,3,opt,name=endTime" json:"endTime,omitempty"`     //结束时间点
+		*/
+		if v, ok := val.(Message); ok {
+			protoAppend(&a.request.C2S.TimeFilterList, v)
 		}
 	}
 }

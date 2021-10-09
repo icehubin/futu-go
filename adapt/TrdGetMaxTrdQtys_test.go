@@ -7,6 +7,7 @@ import (
 	"github.com/icehubin/futu-go/client"
 	"github.com/icehubin/futu-go/logger"
 	"github.com/icehubin/futu-go/pb/trdgetacclist"
+	"google.golang.org/protobuf/proto"
 )
 
 func TestTrdGetMaxTrdQtys(t *testing.T) {
@@ -30,10 +31,10 @@ func TestTrdGetMaxTrdQtys(t *testing.T) {
 			trdMarket := acc.GetTrdMarketAuthList()[0]
 			if trdMarket == int32(2) { //美股
 				res = clt.Sync(adapt.ProtoID_Trd_GetMaxTrdQtys,
-					adapt.With("Header", adapt.TrdHeader{
-						TrdEnv:    acc.GetTrdEnv(),
-						AccID:     acc.GetAccID(),
-						TrdMarket: acc.GetTrdMarketAuthList()[0],
+					adapt.With("Header", adapt.Message{
+						"trdEnv":    proto.Int32(acc.GetTrdEnv()),
+						"accID":     proto.Uint64(acc.GetAccID()),
+						"trdMarket": proto.Int32(trdMarket),
 					}),
 					adapt.With("code", "TSLA"),
 					adapt.With("price", float64(500)),

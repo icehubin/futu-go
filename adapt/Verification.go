@@ -33,6 +33,11 @@ func (a *Verification) SetC2SOption(protoKey string, val interface{}) {
 		Code *string `protobuf:"bytes,3,opt,name=code" json:"code,omitempty"`  //验证码，请求验证码时忽略该字段，输入时必填
 	*/
 	switch strings.ToUpper(protoKey) {
+	case "":
+		//尝试直接设置所有普调变量
+		if v, ok := val.(Message); ok {
+			protoFill(a.request.C2S, v)
+		}
 	case strings.ToUpper("Type"):
 		if v, ok := val.(int32); ok {
 			a.request.C2S.Type = proto.Int32(v)

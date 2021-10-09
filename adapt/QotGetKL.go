@@ -40,6 +40,11 @@ func (a *QotGetKL) SetC2SOption(protoKey string, val interface{}) {
 		ReqNum    *int32              `protobuf:"varint,4,req,name=reqNum" json:"reqNum,omitempty"`       //请求K线根数
 	*/
 	switch strings.ToUpper(protoKey) {
+	case "":
+		//尝试直接设置所有普调变量
+		if v, ok := val.(Message); ok {
+			protoFill(a.request.C2S, v)
+		}
 	case "SECURITY", "CODE":
 		if v, ok := val.(string); ok {
 			nv := Stock2Security(v)

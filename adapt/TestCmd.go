@@ -32,6 +32,11 @@ func (a *TestCmd) SetC2SOption(protoKey string, val interface{}) {
 		Params *string `protobuf:"bytes,2,opt,name=params" json:"params,omitempty"`
 	*/
 	switch strings.ToUpper(protoKey) {
+	case "":
+		//尝试直接设置所有普调变量
+		if v, ok := val.(Message); ok {
+			protoFill(a.request.C2S, v)
+		}
 	case strings.ToUpper("Cmd"):
 		if v, ok := val.(string); ok {
 			a.request.C2S.Cmd = proto.String(v)

@@ -33,6 +33,11 @@ func (a *QotGetSuspend) SetC2SOption(protoKey string, val interface{}) {
 		EndTime      *string               `protobuf:"bytes,3,req,name=endTime" json:"endTime,omitempty"`           //结束时间字符串
 	*/
 	switch strings.ToUpper(protoKey) {
+	case "":
+		//尝试直接设置所有普调变量
+		if v, ok := val.(Message); ok {
+			protoFill(a.request.C2S, v)
+		}
 	case strings.ToUpper("SecurityList"), strings.ToUpper("code_list"):
 		if v, ok := val.([]string); ok {
 			nv := StocksToSecurity(v)

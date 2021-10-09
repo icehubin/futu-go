@@ -7,6 +7,7 @@ import (
 	"github.com/icehubin/futu-go/client"
 	"github.com/icehubin/futu-go/logger"
 	"github.com/icehubin/futu-go/pb/trdgetacclist"
+	"google.golang.org/protobuf/proto"
 )
 
 func TestTrdGetHistoryOrderFillList(t *testing.T) {
@@ -29,16 +30,15 @@ func TestTrdGetHistoryOrderFillList(t *testing.T) {
 			}
 			trdMarket := acc.GetTrdMarketAuthList()[0]
 			if trdMarket == int32(2) { //美股
-				res = clt.Sync(adapt.ProtoID_Trd_GetHistoryOrderFillList,
-					adapt.With("Header", adapt.TrdHeader{
-						TrdEnv:    acc.GetTrdEnv(),
-						AccID:     acc.GetAccID(),
-						TrdMarket: acc.GetTrdMarketAuthList()[0],
-					}),
-					adapt.With("Conditions", adapt.TrdFilterConditions{
-						CodeList:  []string{"TSLA"},
-						BeginTime: "2021-01-01",
-						EndTime:   "2022-01-01",
+				res = clt.Sync(adapt.ProtoID_Trd_GetHistoryOrderFillList, adapt.With("Header", adapt.Message{
+					"trdEnv":    proto.Int32(acc.GetTrdEnv()),
+					"accID":     proto.Uint64(acc.GetAccID()),
+					"trdMarket": proto.Int32(acc.GetTrdMarketAuthList()[0]),
+				}),
+					adapt.With("Conditions", adapt.Message{
+						"codeList":  []string{"TSLA"},
+						"beginTime": proto.String("2021-01-01"),
+						"endTime":   proto.String("2022-01-01"),
 					}),
 				)
 			}

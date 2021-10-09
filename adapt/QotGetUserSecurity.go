@@ -31,6 +31,11 @@ func (a *QotGetUserSecurity) SetC2SOption(protoKey string, val interface{}) {
 		GroupName *string `protobuf:"bytes,1,req,name=groupName" json:"groupName,omitempty"` //分组名,有同名的返回排序首个
 	*/
 	switch strings.ToUpper(protoKey) {
+	case "":
+		//尝试直接设置所有普调变量
+		if v, ok := val.(Message); ok {
+			protoFill(a.request.C2S, v)
+		}
 	case strings.ToUpper("GroupName"), strings.ToUpper("Name"):
 		if v, ok := val.(string); ok {
 			a.request.C2S.GroupName = proto.String(v)

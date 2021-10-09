@@ -3,6 +3,8 @@ package adapt_test
 import (
 	"testing"
 
+	"google.golang.org/protobuf/proto"
+
 	"github.com/icehubin/futu-go/adapt"
 	"github.com/icehubin/futu-go/client"
 )
@@ -15,8 +17,12 @@ func TestQotGetSuspend(t *testing.T) {
 
 	res := clt.Sync(adapt.ProtoID_Qot_GetSuspend,
 		adapt.With("code_list", []string{"SH.600519", "HK.03333"}),
-		adapt.With("begin", "2020-01-01"),
-		adapt.With("end", "2021-12-31"),
+		// adapt.With("begin", "2020-01-01"),
+		// adapt.With("end", "2021-12-31"),
+		adapt.With("", adapt.Message{
+			"beginTime": proto.String("2020-01-02"),
+			"endTime":   proto.String("2021-12-30"),
+		}),
 	)
 
 	if res.RetType != adapt.RetType_Succeed {

@@ -37,6 +37,11 @@ func (a *QotSetPriceReminder) SetC2SOption(protoKey string, val interface{}) {
 		Note     *string             `protobuf:"bytes,6,opt,name=note" json:"note,omitempty"`         // 用户设置到价提醒时的标注，仅支持 20 个以内的中文字符，删除、启用、禁用的情况下会忽略该字段
 	*/
 	switch strings.ToUpper(protoKey) {
+	case "":
+		//尝试直接设置所有普调变量
+		if v, ok := val.(Message); ok {
+			protoFill(a.request.C2S, v)
+		}
 	case strings.ToUpper("Security"), strings.ToUpper("code"):
 		if v, ok := val.(string); ok {
 			nv := Stock2Security(v)

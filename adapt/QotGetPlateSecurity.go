@@ -33,6 +33,11 @@ func (a *QotGetPlateSecurity) SetC2SOption(protoKey string, val interface{}) {
 		Ascend    *bool               `protobuf:"varint,3,opt,name=ascend" json:"ascend,omitempty"`       //升序ture, 降序false, 不填默认升序
 	*/
 	switch strings.ToUpper(protoKey) {
+	case "":
+		//尝试直接设置所有普调变量
+		if v, ok := val.(Message); ok {
+			protoFill(a.request.C2S, v)
+		}
 	case strings.ToUpper("Plate"), strings.ToUpper("code"):
 		if v, ok := val.(string); ok {
 			nv := Stock2Security(v)

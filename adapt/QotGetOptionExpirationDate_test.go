@@ -3,6 +3,8 @@ package adapt_test
 import (
 	"testing"
 
+	"google.golang.org/protobuf/proto"
+
 	"github.com/icehubin/futu-go/adapt"
 	"github.com/icehubin/futu-go/client"
 )
@@ -15,6 +17,9 @@ func TestQotGetOptionExpirationDate(t *testing.T) {
 
 	res := clt.Sync(adapt.ProtoID_Qot_GetOptionExpirationDate,
 		adapt.With("code", "US.TSLA"),
+		adapt.With("", adapt.Message{
+			"indexOptionType": proto.Int32(1),
+		}),
 	)
 
 	if res.RetType != adapt.RetType_Succeed {

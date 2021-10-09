@@ -31,6 +31,11 @@ func (a *QotGetIpoList) SetC2SOption(protoKey string, val interface{}) {
 		Market *int32 `protobuf:"varint,1,req,name=market" json:"market,omitempty"` // Qot_Common::QotMarket股票市场，支持沪股和深股，且沪股和深股不做区分都代表A股市场。
 	*/
 	switch strings.ToUpper(protoKey) {
+	case "":
+		//尝试直接设置所有普调变量
+		if v, ok := val.(Message); ok {
+			protoFill(a.request.C2S, v)
+		}
 	case strings.ToUpper("Market"):
 		if v, ok := val.(int32); ok {
 			a.request.C2S.Market = proto.Int32(v)

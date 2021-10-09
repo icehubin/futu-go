@@ -10,6 +10,7 @@ import (
 	"github.com/icehubin/futu-go/logger"
 	"github.com/icehubin/futu-go/pb/trdgetacclist"
 	"github.com/icehubin/futu-go/pb/trdplaceorder"
+	"google.golang.org/protobuf/proto"
 )
 
 func TestTrdModifyOrder(t *testing.T) {
@@ -49,10 +50,10 @@ func TestTrdModifyOrder(t *testing.T) {
 			if trdMarket == int32(2) { //美股
 				//
 				res = clt.Sync(adapt.ProtoID_Trd_PlaceOrder,
-					adapt.With("Header", adapt.TrdHeader{
-						TrdEnv:    acc.GetTrdEnv(),
-						AccID:     acc.GetAccID(),
-						TrdMarket: acc.GetTrdMarketAuthList()[0],
+					adapt.With("Header", adapt.Message{
+						"trdEnv":    proto.Int32(acc.GetTrdEnv()),
+						"accID":     proto.Uint64(acc.GetAccID()),
+						"trdMarket": proto.Int32(acc.GetTrdMarketAuthList()[0]),
 					}),
 					adapt.With("code", "US.TSLA"),
 					adapt.With("trdside", "buy"),
@@ -63,10 +64,10 @@ func TestTrdModifyOrder(t *testing.T) {
 					orderid := res.S2C.(*trdplaceorder.S2C).GetOrderID()
 					//改单
 					res = clt.Sync(adapt.ProtoID_Trd_ModifyOrder,
-						adapt.With("Header", adapt.TrdHeader{
-							TrdEnv:    acc.GetTrdEnv(),
-							AccID:     acc.GetAccID(),
-							TrdMarket: acc.GetTrdMarketAuthList()[0],
+						adapt.With("Header", adapt.Message{
+							"trdEnv":    proto.Int32(acc.GetTrdEnv()),
+							"accID":     proto.Uint64(acc.GetAccID()),
+							"trdMarket": proto.Int32(acc.GetTrdMarketAuthList()[0]),
 						}),
 						adapt.With("orderid", orderid),
 						adapt.With("op", "modify"),
@@ -75,10 +76,10 @@ func TestTrdModifyOrder(t *testing.T) {
 					)
 					//撤单
 					res = clt.Sync(adapt.ProtoID_Trd_ModifyOrder,
-						adapt.With("Header", adapt.TrdHeader{
-							TrdEnv:    acc.GetTrdEnv(),
-							AccID:     acc.GetAccID(),
-							TrdMarket: acc.GetTrdMarketAuthList()[0],
+						adapt.With("Header", adapt.Message{
+							"trdEnv":    proto.Int32(acc.GetTrdEnv()),
+							"accID":     proto.Uint64(acc.GetAccID()),
+							"trdMarket": proto.Int32(acc.GetTrdMarketAuthList()[0]),
 						}),
 						adapt.With("orderid", orderid),
 						adapt.With("op", "cancel"),
@@ -87,10 +88,10 @@ func TestTrdModifyOrder(t *testing.T) {
 			}
 			if trdMarket == int32(1) { //港股
 				res = clt.Sync(adapt.ProtoID_Trd_PlaceOrder,
-					adapt.With("Header", adapt.TrdHeader{
-						TrdEnv:    acc.GetTrdEnv(),
-						AccID:     acc.GetAccID(),
-						TrdMarket: acc.GetTrdMarketAuthList()[0],
+					adapt.With("Header", adapt.Message{
+						"trdEnv":    proto.Int32(acc.GetTrdEnv()),
+						"accID":     proto.Uint64(acc.GetAccID()),
+						"trdMarket": proto.Int32(acc.GetTrdMarketAuthList()[0]),
 					}),
 					adapt.With("code", "HK.00700"),
 					adapt.With("trdside", "buy"),
@@ -101,10 +102,10 @@ func TestTrdModifyOrder(t *testing.T) {
 					orderid := res.S2C.(*trdplaceorder.S2C).GetOrderID()
 					//改单
 					res = clt.Sync(adapt.ProtoID_Trd_ModifyOrder,
-						adapt.With("Header", adapt.TrdHeader{
-							TrdEnv:    acc.GetTrdEnv(),
-							AccID:     acc.GetAccID(),
-							TrdMarket: acc.GetTrdMarketAuthList()[0],
+						adapt.With("Header", adapt.Message{
+							"trdEnv":    proto.Int32(acc.GetTrdEnv()),
+							"accID":     proto.Uint64(acc.GetAccID()),
+							"trdMarket": proto.Int32(acc.GetTrdMarketAuthList()[0]),
 						}),
 						adapt.With("orderid", orderid),
 						adapt.With("op", "modify"),
@@ -113,10 +114,10 @@ func TestTrdModifyOrder(t *testing.T) {
 					)
 					//失效
 					res = clt.Sync(adapt.ProtoID_Trd_ModifyOrder,
-						adapt.With("Header", adapt.TrdHeader{
-							TrdEnv:    acc.GetTrdEnv(),
-							AccID:     acc.GetAccID(),
-							TrdMarket: acc.GetTrdMarketAuthList()[0],
+						adapt.With("Header", adapt.Message{
+							"trdEnv":    proto.Int32(acc.GetTrdEnv()),
+							"accID":     proto.Uint64(acc.GetAccID()),
+							"trdMarket": proto.Int32(acc.GetTrdMarketAuthList()[0]),
 						}),
 						adapt.With("orderid", orderid),
 						adapt.With("op", "disable"),

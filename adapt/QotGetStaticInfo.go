@@ -34,6 +34,11 @@ func (a *QotGetStaticInfo) SetC2SOption(protoKey string, val interface{}) {
 		SecurityList []*qotcommon.Security `protobuf:"bytes,3,rep,name=securityList" json:"securityList,omitempty"` //股票，若该字段存在，忽略其他字段，只返回该字段股票的静态信息
 	*/
 	switch strings.ToUpper(protoKey) {
+	case "":
+		//尝试直接设置所有普调变量
+		if v, ok := val.(Message); ok {
+			protoFill(a.request.C2S, v)
+		}
 	case strings.ToUpper("SecurityList"), strings.ToUpper("code_list"):
 		if v, ok := val.([]string); ok {
 			nv := StocksToSecurity(v)

@@ -70,6 +70,11 @@ func (a *QotGetWarrant) SetC2SOption(protoKey string, val interface{}) {
 		PriceRecoveryRatioMax *float64            `protobuf:"fixed64,34,opt,name=priceRecoveryRatioMax" json:"priceRecoveryRatioMax,omitempty"` //正股距收回价，的过滤上限（闭区间），仅牛熊证支持此字段过滤。该字段为百分比字段，默认不展示 %，如 20 实际对应 20%。不传代表上限为 +∞（精确到小数点后 3 位，超出部分会被舍弃）
 	*/
 	switch strings.ToUpper(protoKey) {
+	case "":
+		//尝试直接设置所有普调变量
+		if v, ok := val.(Message); ok {
+			protoFill(a.request.C2S, v)
+		}
 	case strings.ToUpper("Owner"), strings.ToUpper("Security"), strings.ToUpper("code"):
 		if v, ok := val.(string); ok {
 			nv := Stock2Security(v)

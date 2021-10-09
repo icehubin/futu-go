@@ -35,6 +35,11 @@ func (a *TrdUnlockTrade) SetC2SOption(protoKey string, val interface{}) {
 		SecurityFirm *int32  `protobuf:"varint,3,opt,name=securityFirm" json:"securityFirm,omitempty"` //券商标识，取值见Trd_Common.SecurityFirm
 	*/
 	switch strings.ToUpper(protoKey) {
+	case "":
+		//尝试直接设置所有普调变量
+		if v, ok := val.(Message); ok {
+			protoFill(a.request.C2S, v)
+		}
 	case strings.ToUpper("lock"):
 		if v, ok := val.(bool); ok {
 			a.request.C2S.Unlock = proto.Bool(!v)

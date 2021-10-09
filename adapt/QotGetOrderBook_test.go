@@ -5,6 +5,8 @@ import (
 	"testing"
 	"time"
 
+	"google.golang.org/protobuf/proto"
+
 	"github.com/icehubin/futu-go/adapt"
 	"github.com/icehubin/futu-go/client"
 )
@@ -23,7 +25,10 @@ func TestQotGetOrderBook(t *testing.T) {
 	time.Sleep(time.Microsecond * 500)
 	res := clt.Sync(adapt.ProtoID_Qot_GetOrderBook,
 		adapt.With("code", "SH.600519"),
-		adapt.With("num", int32(10)),
+		// adapt.With("num", int32(10)),
+		adapt.With("", adapt.Message{
+			"num": proto.Int32(5),
+		}),
 	)
 
 	if res.RetType != adapt.RetType_Succeed {

@@ -5,6 +5,7 @@ import (
 
 	"github.com/icehubin/futu-go/adapt"
 	"github.com/icehubin/futu-go/client"
+	"google.golang.org/protobuf/proto"
 )
 
 func TestQotGetPlateSet(t *testing.T) {
@@ -32,8 +33,12 @@ func TestQotGetPlateSet(t *testing.T) {
 
 	*/
 	res := clt.Sync(adapt.ProtoID_Qot_GetPlateSet,
-		adapt.With("market", int32(21)),
-		adapt.With("type", int32(1)),
+		// adapt.With("market", int32(21)),
+		// adapt.With("plateSetType", int32(1)),
+		adapt.With("", adapt.Message{
+			"market":       proto.Int32(21),
+			"plateSetType": proto.Int32(2),
+		}),
 	)
 
 	if res.RetType != adapt.RetType_Succeed {

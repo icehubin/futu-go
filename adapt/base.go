@@ -93,25 +93,6 @@ type PacketID struct {
 	SerialNo uint32
 }
 
-type TrdHeader struct {
-	TrdEnv    int32  //交易环境, 参见TrdEnv的枚举定义
-	AccID     uint64 //业务账号, 业务账号与交易环境、市场权限需要匹配，否则会返回错误
-	TrdMarket int32  //交易市场, 参见TrdMarket的枚举定义
-}
-
-/*
-	CodeList  []string `protobuf:"bytes,1,rep,name=codeList" json:"codeList,omitempty"`   //代码过滤，只返回包含这些代码的数据，没传不过滤
-	IdList    []uint64 `protobuf:"varint,2,rep,name=idList" json:"idList,omitempty"`      //ID主键过滤，只返回包含这些ID的数据，没传不过滤，订单是orderID、成交是fillID、持仓是positionID
-	BeginTime *string  `protobuf:"bytes,3,opt,name=beginTime" json:"beginTime,omitempty"` //开始时间，严格按YYYY-MM-DD HH:MM:SS或YYYY-MM-DD HH:MM:SS.MS格式传，对持仓无效，拉历史数据必须填
-	EndTime   *string  `protobuf:"bytes,4,opt,name=endTime" json:"endTime,omitempty"`
-*/
-type TrdFilterConditions struct {
-	CodeList  []string `protobuf:"bytes,1,rep,name=codeList" json:"codeList,omitempty"`   //代码过滤，只返回包含这些代码的数据，没传不过滤
-	IdList    []uint64 `protobuf:"varint,2,rep,name=idList" json:"idList,omitempty"`      //ID主键过滤，只返回包含这些ID的数据，没传不过滤，订单是orderID、成交是fillID、持仓是positionID
-	BeginTime string   `protobuf:"bytes,3,opt,name=beginTime" json:"beginTime,omitempty"` //开始时间，严格按YYYY-MM-DD HH:MM:SS或YYYY-MM-DD HH:MM:SS.MS格式传，对持仓无效，拉历史数据必须填
-	EndTime   string   `protobuf:"bytes,4,opt,name=endTime" json:"endTime,omitempty"`     //结束时间，严格按YYYY-MM-DD HH:MM:SS或YYYY-MM-DD HH:MM:SS.MS格式传，对持仓无效，拉历史数据必须填
-}
-
 var DataAdaptMap = map[uint32]interface{}{
 
 	ProtoID_InitConnect:        CreateInitConnect,        // 1001 // 初始化连接

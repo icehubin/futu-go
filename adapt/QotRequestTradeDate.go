@@ -37,6 +37,11 @@ func (a *QotRequestTradeDate) SetC2SOption(protoKey string, val interface{}) {
 		Security  *qotcommon.Security `protobuf:"bytes,4,opt,name=security" json:"security,omitempty"`   // 指定标的
 	*/
 	switch strings.ToUpper(protoKey) {
+	case "":
+		//尝试直接设置所有普调变量
+		if v, ok := val.(Message); ok {
+			protoFill(a.request.C2S, v)
+		}
 	case strings.ToUpper("Security"), strings.ToUpper("code"):
 		if v, ok := val.(string); ok {
 			nv := Stock2Security(v)

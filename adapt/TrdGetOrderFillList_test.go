@@ -6,6 +6,7 @@ import (
 	"github.com/icehubin/futu-go/adapt"
 	"github.com/icehubin/futu-go/logger"
 	"github.com/icehubin/futu-go/pb/trdgetacclist"
+	"google.golang.org/protobuf/proto"
 
 	"github.com/icehubin/futu-go/client"
 )
@@ -29,10 +30,15 @@ func TestTrdGetOrderFillList(t *testing.T) {
 				continue
 			}
 			res = clt.Sync(adapt.ProtoID_Trd_GetOrderFillList,
-				adapt.With("Header", adapt.TrdHeader{
-					TrdEnv:    acc.GetTrdEnv(),
-					AccID:     acc.GetAccID(),
-					TrdMarket: acc.GetTrdMarketAuthList()[0],
+				adapt.With("Header", adapt.Message{
+					"trdEnv":    proto.Int32(acc.GetTrdEnv()),
+					"accID":     proto.Uint64(acc.GetAccID()),
+					"trdMarket": proto.Int32(acc.GetTrdMarketAuthList()[0]),
+				}),
+				adapt.With("Conditions", adapt.Message{
+					"codeList":  []string{"TSLA"},
+					"beginTime": proto.String("2021-01-01"),
+					"endTime":   proto.String("2022-01-01"),
 				}),
 			)
 		}
