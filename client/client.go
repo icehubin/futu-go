@@ -167,6 +167,9 @@ func (c *Client) protoRead() (*adapt.Header, *adapt.Response) {
 		da := createProto.(func(dopts ...adapt.Option) adapt.AdaptInterface)()
 		bodyByte = c.bodyDecrypt(protoID, bodyByte)
 		response := da.UnPackBody(bodyByte)
+		if response.RetType == adapt.RetType_Succeed {
+			response.Data = adapt.S2CToMap(response.S2C)
+		}
 		logger.WithFields(logger.Fields{
 			"ProtoID": protoID,
 			"SeriaNo": header.GetSeriaNo(),
