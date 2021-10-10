@@ -32,7 +32,7 @@ logger是futu-go封装的日志打印接口，采用logrus格式
 # adapt介绍
 adapt主要是协议适配，主要用到的有
 
-1. [adapt.ProtoID_{xxxx}](adapt.consts_ProtoID.go) 常量，调用proto协议编号
+1. [adapt.ProtoID_{xxxx}](adapt/consts_ProtoID.go) 常量，调用proto协议编号
 2. [adapt.With()](README/adapt.With.md) 方法，调用proto协议时设置参数
 
 3. [adapt.Header](README/adapt.Header.md) 富途协议头封装
@@ -43,10 +43,12 @@ adapt主要是协议适配，主要用到的有
 
 1. [client.New/NewEncrypt/Create()](README/client.New.md)
     创建Client对象
-2. [client.ResPack](README/client.ResPack.md)
+2. [client.Sync/Async](README.client.Sync.md)
+    调用富途协议接口
+4. [client.ResPack](README/client.ResPack.md)
     异步回调返回的包体
-3. [client.Worker](README/client.Worker.md)
+4. [client.Worker](README/client.Worker.md)
     一个极简多goroutine调度框架
     使用client.Worker可以轻松实现复杂策略逻辑
-4. Client.KeepAlive()
+5. Client.KeepAlive()
     富途OpenD需要周期性发送KeepAlive()请求，否则会被关闭链接，使用client.Worker的调度已经自动调用不用关系。
