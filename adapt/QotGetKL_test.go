@@ -21,7 +21,7 @@ func TestQotGetKL(t *testing.T) {
 	fmt.Println(clt.Sync(adapt.ProtoID_Qot_Sub,
 		adapt.With("code_list", []string{"SH.600519", "SZ.300957"}),
 		adapt.With("subtype_list", []string{"QUOTE", "TICKER", "K_DAY"}),
-		adapt.With("IsFirstPush", true),
+		adapt.With("IsFirstPush", false),
 	))
 	time.Sleep(time.Microsecond * 500)
 	/*
@@ -42,6 +42,9 @@ func TestQotGetKL(t *testing.T) {
 	if res.RetType != adapt.RetType_Succeed {
 		t.Errorf("Error,excepted:%v, got:%v", adapt.RetType_Succeed, res.RetType)
 	} else {
+		security := adapt.ResToMap(res.Data["security"])
+		stock := adapt.MapSecurityToStock(security)
+		fmt.Println("stock:", stock)
 		mp := make([]map[string]interface{}, 0)
 		if klList, ok := res.Data["klList"]; ok {
 			klines := adapt.ResToArr(klList)

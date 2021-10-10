@@ -33,6 +33,17 @@ func StocksToSecurity(stocks []string) []*qotcommon.Security {
 	return sa
 }
 
+func MapSecurityToStock(sm map[string]interface{}) string {
+	market_name := MARKET_NONE
+	if market, ok := sm["market"]; ok {
+		if market, ok := market.(int32); ok {
+			market_name, ok = Market_Name[market]
+		}
+	}
+	code, _ := sm["code"].(string)
+	return market_name + "." + code
+}
+
 func SecurityToStock(s *qotcommon.Security) string {
 	market_name, ok := Market_Name[*s.Market]
 	if ok {

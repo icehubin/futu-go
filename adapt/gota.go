@@ -170,9 +170,6 @@ func (p *messageParser) parseStruct(pm interface{}) map[string]interface{} {
 
 	tag := "json"
 	t := v.Type()
-	if in(t.Name(), []string{"qotcommon.Security"}) {
-		//todo fix some pb
-	}
 	for i := 0; i < t.NumField(); i++ {
 		fieldType := t.Field(i)
 		// read tag
