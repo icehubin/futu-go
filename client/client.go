@@ -16,17 +16,17 @@ import (
 )
 
 func New(host string) (*Client, error) {
-	return Create(host, false, "", true)
+	return Create(host, "", true)
 }
 
 func EncryptNew(host string, rsa_file string) (*Client, error) {
-	return Create(host, true, rsa_file, true)
+	return Create(host, rsa_file, true)
 }
 
-func Create(host string, encrypt bool, rsa_file string, notify bool) (*Client, error) {
+func Create(host string, rsa_file string, notify bool) (*Client, error) {
 	client := &Client{
 		host:     host,
-		encrypt:  encrypt,
+		encrypt:  false,
 		notify:   notify,
 		rsa_file: rsa_file,
 	}
@@ -40,6 +40,7 @@ func Create(host string, encrypt bool, rsa_file string, notify bool) (*Client, e
 		buff := make([]byte, info.Size())
 		file.Read(buff)
 		client.rsa_key = buff
+		client.encrypt = true
 	}
 	err := client.Init()
 	if err != nil {

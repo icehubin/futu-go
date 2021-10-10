@@ -5,7 +5,7 @@ import (
 )
 
 type Response struct {
-	RetType int32  //返回结果，参见Common.RetType的枚举定义
+	RetType int32  //返回结果，参见adapt.RetType_XXX的枚举定义
 	RetMsg  string //返回结果描述
 	ErrCode int32  //错误码，客户端一般通过retType和retMsg来判断结果和详情，errCode只做日志记录，仅在个别协议失败时对账用
 	S2C     proto.Message

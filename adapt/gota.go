@@ -1,7 +1,7 @@
 package adapt
 
 /*
-把*proto.Message类型的返回值转换成 map[string]interface{}
+把proto.Message类型的返回值转换成 map[string]interface{}
 方便快速的载入 gota (github.com/go-gota/gota/dataframe), gota是GoLang下的计算工具，与Python下的pandas类似
 转换后的key，是使用的protobuf中的`json`tag的定义，首字母小写的那个
 你也可以使用adapt.Field('oldkey','newkey')替换掉旧的key，因为有些字段定义太长，在gota下会被折叠，或者与你自己的数据库字段定义不一致
@@ -16,8 +16,6 @@ adapt.PbParser(
 import (
 	"reflect"
 	"strings"
-
-	"google.golang.org/protobuf/proto"
 )
 
 //===
@@ -37,24 +35,18 @@ func Field(key string, alias string) field {
 	}
 }
 
-func (p *messageParser) setFields(a field) {
+func (p *msgParser) setFields(a field) {
 	p.fields[a.key] = a.alias
 }
 
 //===
-//todo custom change
-var customMap = map[string]interface{}{
-	"qotcommon.Security": func(pm *proto.Message) {},
-}
 
-//===
-
-type messageParser struct {
+type msgParser struct {
 	fields map[string]string
 }
 
-func PbParser(fields ...field) *messageParser {
-	pm := &messageParser{
+func PbParser(fields ...field) *msgParser {
+	pm := &msgParser{
 		fields: make(map[string]string),
 	}
 	for _, f := range fields {
@@ -67,7 +59,7 @@ func PbParser(fields ...field) *messageParser {
 直接将返回结果是 []*proto.Message类型的转换为 []map[string]interface{}
 使用response.Data里的数据，没必要使用这个方法
 */
-func (p *messageParser) arr(pms interface{}) []map[string]interface{} {
+func (p *msgParser) arr(pms interface{}) []map[string]interface{} {
 	res := make([]map[string]interface{}, 0)
 
 	fvalue := reflect.ValueOf(pms)
@@ -93,7 +85,7 @@ func (p *messageParser) arr(pms interface{}) []map[string]interface{} {
 	return res
 }
 
-func (p *messageParser) parseValue(fvalue reflect.Value) interface{} {
+func (p *msgParser) parseValue(fvalue reflect.Value) interface{} {
 	switch fvalue.Kind() {
 	case reflect.Slice, reflect.Array:
 		m := make([]interface{}, 0)
@@ -150,7 +142,7 @@ func (p *messageParser) parseValue(fvalue reflect.Value) interface{} {
 	}
 }
 
-func (p *messageParser) parseStruct(pm interface{}) map[string]interface{} {
+func (p *msgParser) parseStruct(pm interface{}) map[string]interface{} {
 	res := make(map[string]interface{})
 	//todo fix types
 
@@ -235,7 +227,7 @@ func ResToArr(val interface{}) []interface{} {
 	return PbParser().toArr(val)
 }
 
-func (p *messageParser) toMap(val interface{}) map[string]interface{} {
+func (p *msgParser) toMap(val interface{}) map[string]interface{} {
 	res := make(map[string]interface{})
 	fvalue := reflect.ValueOf(val)
 
@@ -264,7 +256,7 @@ func (p *messageParser) toMap(val interface{}) map[string]interface{} {
 	return res
 }
 
-func (p *messageParser) toArr(val interface{}) []interface{} {
+func (p *msgParser) toArr(val interface{}) []interface{} {
 	res := make([]interface{}, 0)
 	fvalue := reflect.ValueOf(val)
 

@@ -33,7 +33,6 @@ func TestQotGetKL(t *testing.T) {
 	res := clt.Sync(adapt.ProtoID_Qot_GetKL,
 		adapt.With("code", "SZ.300957"),
 		adapt.With("ktype", "K_DAY"),
-		// adapt.With("reqNum", int32(10)),
 		adapt.With("", adapt.Message{
 			"reqNum": proto.Int32(5),
 		}),
