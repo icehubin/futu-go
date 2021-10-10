@@ -34,16 +34,14 @@ adapt主要是协议适配，主要用到的有
 
 1. [adapt.ProtoID_{xxxx}](adapt/consts_ProtoID.go) 常量，调用proto协议编号
 2. [adapt.With()](README/adapt.With.md) 方法，调用proto协议时设置参数
-
 3. [adapt.Header](README/adapt.Header.md) 富途协议头封装
-
 4. [adapt.Response](README/adapt.Response.md) 调用client.Sync的返回值
 
 # client介绍
 
 1. [client.New/NewEncrypt/Create()](README/client.New.md)
     创建Client对象
-2. [client.Sync/Async](README.client.Sync.md)
+2. [client.Sync/Async](README/client.Sync.md)
     调用富途协议接口
 4. [client.ResPack](README/client.ResPack.md)
     异步回调返回的包体
