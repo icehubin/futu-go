@@ -163,5 +163,7 @@ adapt.With("baseFilterList",adapt.Message{
 实际上，用这个方法，也可以设置 **`repeated Qot_Common.Security`** ，但是没有必要，高频参数已经做了便利化转换。
 
 至此
+
 所有的futu参数你都可以便利传入，而不用引入proto生成的那堆几十个package的go对象。
-futuproto目录下的proto文件，当一个文档来看即可咯
+
+futuproto目录下的proto文件，当一个文档来看即可

@@ -1,6 +1,8 @@
 # client.Sync/Async
 client.Sync 同步调用，有返回值
+
 client.Async 异步调用，无返回值
+
 两个方法调用参数完全一样
 
 一个典型的调用方式如下：

@@ -8,8 +8,8 @@ const (
 	ProtoID_GetUserInfo        = 1005 // 获取用户信息
 	ProtoID_Verification       = 1006 // 请求或输入验证码
 	ProtoID_GetDelayStatistics = 1007 // 获取延迟统计
-	ProtoID_TestCmd            = 1008 // futu-go已支持，没有文档，不知道支持哪些
-	ProtoID_InitQuantMode      = 1009 //不支持，不知道干嘛的，也没有看到proto文件
+	ProtoID_TestCmd            = 1008 // futu-go已支持，没有文档，不知道能输入什么返回什么
+	ProtoID_InitQuantMode      = 1009 // 不支持，不知道干嘛的，也没有看到proto文件
 
 	ProtoID_Trd_GetAccList  = 2001 // 获取业务账户列表
 	ProtoID_Trd_UnlockTrade = 2005 // 解锁或锁定交易
